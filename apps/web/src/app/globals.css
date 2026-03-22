@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* ── Shop Salida — Creative District Color Palette ───────────────────── */
+  /* Museum-dark background, creative violet primary, gallery teal accent   */
+
+  --color-background: #0A0A0F;
+  --color-foreground: #E2E8F0;
+
+  /* Primary brand: creative violet */
+  --color-violet: #7C3AED;
+  --color-violet-light: #9B67F5;
+  --color-violet-dark: #5B21B6;
+
+  /* Legacy gold alias → violet for btn compatibility */
+  --color-gold: #7C3AED;
+  --color-gold-light: #9B67F5;
+  --color-gold-dark: #5B21B6;
+
+  /* Secondary accent: gallery teal */
+  --color-teal: #2DD4BF;
+  --color-teal-light: #5EEAD4;
+  --color-teal-dark: #0F9488;
+
+  /* Coral accent for highlights */
+  --color-coral: #F87171;
+
+  /* Surfaces */
+  --color-surface: #13131A;
+  --color-surface-hover: #1A1A25;
+  --color-border: #2A2A3D;
+  --color-muted: #7B7BA8;
+
+  /* Status */
+  --color-destructive: #F87171;
+  --color-success: #34D399;
+  --color-warning: #FBBF24;
+
+  /* Category accent colors */
+  --color-art: #A78BFA;
+  --color-boutique: #F87171;
+  --color-outdoor: #34D399;
+  --color-vintage: #FBBF24;
+  --color-gift: #60A5FA;
+  --color-jewelry: #2DD4BF;
+  --color-market: #34D399;
+  --color-home: #C084FC;
+
+  /* ── shadcn/ui CSS variable aliases ──────────────────────────────────── */
+  --color-card: var(--color-surface);
+  --color-card-foreground: var(--color-foreground);
+  --color-popover: var(--color-surface);
+  --color-popover-foreground: var(--color-foreground);
+  --color-primary: var(--color-violet);
+  --color-primary-foreground: #ffffff;
+  --color-secondary: var(--color-surface-hover);
+  --color-secondary-foreground: var(--color-foreground);
+  --color-muted-foreground: var(--color-muted);
+  --color-accent: var(--color-surface-hover);
+  --color-accent-foreground: var(--color-foreground);
+  --color-input: var(--color-surface-hover);
+  --color-ring: var(--color-violet);
+
+  /* ── Typography ──────────────────────────────────────────────────────── */
+  /* Literal font names — required for Tailwind v4 @theme inline */
+  --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
+
+  /* ── Radius ──────────────────────────────────────────────────────────── */
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+}
+
+/* ── Base styles ─────────────────────────────────────────────────────────── */
+
+* {
+  border-color: theme(--color-border);
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: theme(--color-background);
+  color: theme(--color-foreground);
+  font-family: theme(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Touch targets (44px minimum per Gold Standard #32) ─────────────────── */
+button,
+a,
+[role="button"],
+input[type="button"],
+input[type="submit"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* ── Focus ring ──────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid theme(--color-gold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Selection ───────────────────────────────────────────────────────────── */
+::selection {
+  background-color: theme(--color-gold);
+  color: #0D1117;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: theme(--color-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: theme(--color-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: theme(--color-muted);
+}

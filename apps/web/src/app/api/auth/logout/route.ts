@@ -1,0 +1,9 @@
+import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
+
+export async function POST() {
+  const jar = await cookies()
+  jar.delete('ss_session')
+  jar.delete('ss_admin')
+  return NextResponse.json({ ok: true })
+}
