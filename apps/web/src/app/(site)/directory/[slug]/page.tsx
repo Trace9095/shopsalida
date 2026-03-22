@@ -117,7 +117,7 @@ export default async function ShopPage({ params }: Props) {
                 </span>
                 {shop.tier === 'sponsored' && (
                   <span className="text-xs bg-gold text-background px-2 py-0.5 rounded font-semibold">
-                    Sponsored
+                    {shop.tags?.includes('featured partner') ? 'Featured Partner' : 'Sponsored'}
                   </span>
                 )}
                 {shop.tier === 'premium' && (

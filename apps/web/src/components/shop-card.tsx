@@ -35,6 +35,7 @@ interface ShopCardProps {
 
 export function ShopCard({ shop, compact = false }: ShopCardProps) {
   const tier = TIER_STYLES[shop.tier as keyof typeof TIER_STYLES] ?? TIER_STYLES.free
+  const isFeaturedPartner = shop.tags?.includes('featured partner')
 
   return (
     <Link
@@ -61,14 +62,14 @@ export function ShopCard({ shop, compact = false }: ShopCardProps) {
             </div>
           )}
           {/* Tier badge */}
-          {tier.badge && (
+          {(tier.badge || isFeaturedPartner) && (
             <div className={cn(
               'absolute top-2 right-2 px-2 py-0.5 rounded text-xs font-semibold',
               shop.tier === 'sponsored'
                 ? 'bg-gold text-background'
                 : 'bg-surface/90 text-gold border border-gold/40'
             )}>
-              {tier.badge}
+              {isFeaturedPartner ? 'Featured Partner' : tier.badge}
             </div>
           )}
         </div>
@@ -88,14 +89,14 @@ export function ShopCard({ shop, compact = false }: ShopCardProps) {
           <span className="text-xs text-muted bg-surface-hover px-2 py-0.5 rounded">
             {CATEGORY_LABELS[shop.category] ?? shop.category}
           </span>
-          {compact && tier.badge && (
+          {compact && (tier.badge || isFeaturedPartner) && (
             <span className={cn(
               'text-xs px-2 py-0.5 rounded font-medium',
               shop.tier === 'sponsored'
                 ? 'bg-gold/20 text-gold'
                 : 'bg-surface-hover text-gold/80'
             )}>
-              {tier.badge}
+              {isFeaturedPartner ? 'Featured Partner' : tier.badge}
             </span>
           )}
         </div>

@@ -400,6 +400,113 @@ async function main() {
       isFeatured: false,
       isClaimed: false,
     },
+    // ── Featured Partners — Day Trip Adventure (Canon City / Royal Gorge) ──────
+    {
+      slug: 'royal-gorge-rafting',
+      name: 'Royal Gorge Rafting',
+      shortDescription: "Colorado's #1 whitewater rafting — Class IV-V through the Royal Gorge canyon.",
+      description:
+        'Royal Gorge Rafting runs the most legendary whitewater in Colorado — 10 miles of Class IV-V rapids through a canyon with 1,000-foot granite walls. ' +
+        'Half-day and full-day trips depart daily April through September. All gear provided, no experience necessary. ' +
+        'Just 45 minutes east of Salida on US-50 — the perfect addition to your Salida shopping day.',
+      category: 'outdoor-gear',
+      tier: 'sponsored',
+      address: 'Canon City Area',
+      city: 'Canon City',
+      state: 'CO',
+      zip: '81212',
+      phone: '(719) 275-7238',
+      website: 'https://royalgorgerafting.net',
+      bookingUrl: 'https://royalgorgerafting.net',
+      tags: ['rafting', 'whitewater', 'Royal Gorge', 'day trip', 'adventure', 'featured partner'],
+      isFeatured: true,
+      isClaimed: true,
+    },
+    {
+      slug: 'royal-gorge-zipline-tours',
+      name: 'Royal Gorge Zipline Tours',
+      shortDescription: "Fly 1,200 feet above the Royal Gorge on Colorado's most spectacular zipline.",
+      description:
+        'Royal Gorge Zipline Tours sends you soaring over the gorge at up to 1,200 feet above the Arkansas River — ' +
+        'the most breathtaking zipline experience in Colorado. Parallel lines offer stunning views of the Royal Gorge suspension bridge ' +
+        'and canyon walls. Open seasonally; call ahead for schedules. ' +
+        'Just 45 minutes east of Salida on US-50.',
+      category: 'outdoor-gear',
+      tier: 'sponsored',
+      address: 'Canon City Area',
+      city: 'Canon City',
+      state: 'CO',
+      zip: '81212',
+      phone: '(719) 275-7238',
+      website: 'https://royalgorgeziplinetours.com',
+      bookingUrl: 'https://royalgorgeziplinetours.com',
+      tags: ['zipline', 'Royal Gorge', 'day trip', 'adventure', 'canyon views', 'featured partner'],
+      isFeatured: true,
+      isClaimed: true,
+    },
+    {
+      slug: 'royal-gorge-vacation-rentals',
+      name: 'Royal Gorge Vacation Rentals',
+      shortDescription: 'Airstreams, yurts, and glamping cabins near the Royal Gorge.',
+      description:
+        'Royal Gorge Vacation Rentals offers unique accommodations near the gorge — vintage Airstreams, furnished yurts, and glamping ' +
+        'cabins set among towering pines. The perfect way to turn a Salida day trip into a full Colorado weekend. ' +
+        'Book the night and make the most of both Salida shopping and Royal Gorge adventure.',
+      category: 'outdoor-gear',
+      tier: 'sponsored',
+      address: 'Canon City Area',
+      city: 'Canon City',
+      state: 'CO',
+      zip: '81212',
+      phone: '(719) 275-7238',
+      website: 'https://royalgorgevacationrentals.com',
+      bookingUrl: 'https://royalgorgevacationrentals.com',
+      tags: ['glamping', 'Airstream', 'yurt', 'vacation rental', 'Royal Gorge', 'featured partner'],
+      isFeatured: true,
+      isClaimed: true,
+    },
+    // ── Featured Partners — Dining Near the Gorge (Canon City) ────────────────
+    {
+      slug: 'whitewater-bar-grill',
+      name: 'Whitewater Bar & Grill',
+      shortDescription: "Canon City's favorite bar and grill — open April through October.",
+      description:
+        'Whitewater Bar & Grill is the go-to post-adventure spot in Canon City — great burgers, local Colorado craft beers, ' +
+        'and a lively atmosphere that welcomes rafters, hikers, and Salida shoppers alike. ' +
+        'Open seasonally April 17 through October 31. ' +
+        'Located in downtown Canon City, 45 minutes east of Salida on US-50.',
+      category: 'food-specialty',
+      tier: 'sponsored',
+      address: 'Canon City',
+      city: 'Canon City',
+      state: 'CO',
+      zip: '81212',
+      phone: '(719) 269-1009',
+      website: 'https://whitewaterbar.com',
+      tags: ['bar and grill', 'burgers', 'craft beer', 'Canon City dining', 'featured partner', 'seasonal'],
+      isFeatured: true,
+      isClaimed: true,
+    },
+    {
+      slug: 'whitewater-rooftop-social',
+      name: 'Whitewater Rooftop Social',
+      shortDescription: 'Year-round rooftop dining and cocktails in downtown Canon City.',
+      description:
+        'Whitewater Rooftop Social offers elevated dining and craft cocktails on a rooftop terrace overlooking Canon City and the mountains beyond. ' +
+        'Open year-round — the perfect dinner destination after a day of Royal Gorge adventure or Salida shopping. ' +
+        '45 minutes east of Salida on US-50.',
+      category: 'food-specialty',
+      tier: 'sponsored',
+      address: 'Canon City',
+      city: 'Canon City',
+      state: 'CO',
+      zip: '81212',
+      phone: '(719) 451-7241',
+      website: 'https://wwrooftopsocial.com',
+      tags: ['rooftop dining', 'cocktails', 'Canon City', 'dinner', 'featured partner', 'year-round'],
+      isFeatured: true,
+      isClaimed: true,
+    },
     // ── Food & Specialty ───────────────────────────────────────────────────
     {
       slug: 'salida-wine-and-spirits',
