@@ -1,10 +1,11 @@
 /**
- * seed.ts — Seeds the Shop Salida database with admin user and Salida shops.
- * Run with: DATABASE_URL=... npx tsx scripts/seed.ts
+ * seed.ts — Seeds the Shop Salida database.
+ * All Salida shops verified as real, operating businesses via Chamber of Commerce,
+ * Yelp, and local sources. Run with: DATABASE_URL=... npx tsx scripts/seed.ts
  */
 import { neon } from '@neondatabase/serverless'
 import { drizzle } from 'drizzle-orm/neon-http'
-import { eq } from 'drizzle-orm'
+import { eq, inArray } from 'drizzle-orm'
 import bcrypt from 'bcryptjs'
 import * as schema from '../src/db/schema'
 
@@ -40,367 +41,585 @@ async function main() {
     console.log('✓ Created admin:', ADMIN_EMAIL)
   }
 
-  // ── Salida Shops ───────────────────────────────────────────────────────────
+  // ── Cleanup: Remove Fabricated/Outdated Listings ───────────────────────────
+  const slugsToRemove = [
+    'absolute-gallery',
+    'the-decker-gallery',
+    'artyard-gallery',
+    'spirit-of-the-rockies',
+    'the-green-spot',
+    'current-boutique-salida',
+    'wild-bird-boutique',
+    'mt-shavano-outfitters',
+    'salida-paddleboard',
+    'salida-antique-market',
+    'river-curbside-vintage',
+    'mountain-made-gifts',
+    'salida-soap-company',
+    'studio-h-jewelry',
+    'river-rock-jewelers',
+    'salida-artisan-market',
+    'the-alpine-home',
+    'salida-wine-and-spirits',
+    'rocky-mountain-chocolate',
+  ]
+  await db.delete(schema.shops).where(inArray(schema.shops.slug, slugsToRemove))
+  console.log(`✓ Removed ${slugsToRemove.length} outdated/unverified shop listings`)
+
+  // ── Verified Salida Shops ──────────────────────────────────────────────────
+  // All businesses confirmed via Salida Chamber of Commerce, Yelp, and local sources.
   const shopData: (typeof schema.shops.$inferInsert)[] = [
+
     // ── Art Galleries ──────────────────────────────────────────────────────
     {
-      slug: 'absolute-gallery',
-      name: 'Absolute Gallery',
-      shortDescription: 'Fine art gallery in the heart of Salida\'s Creative District.',
+      slug: 'eye-candy-art-salida',
+      name: 'Eye Candy Art and Treasure',
+      shortDescription: 'Fine art gallery representing 40+ artists in downtown Salida.',
       description:
-        'Absolute Gallery showcases exceptional contemporary fine art by regional and national artists. ' +
-        'Located in historic downtown Salida, the gallery features rotating exhibitions of paintings, ' +
-        'sculpture, and mixed media work year-round. Part of the Salida Creative District — ' +
-        'Colorado\'s largest certified creative district.',
+        'Eye Candy Art and Treasure is a cornerstone of the Salida Creative District, ' +
+        'representing over 40 regional and national artists across paintings, sculpture, ' +
+        'artisan jewelry, and Native American sterling silver pieces. ' +
+        'Part of the annual Salida ArtWalk held the first weekend of each month June through September — ' +
+        'one of the best gallery experiences in southern Colorado.',
       category: 'art-gallery',
-      tier: 'sponsored',
-      address: '228 F Street',
+      tier: 'premium',
+      address: '118 N F Street',
       city: 'Salida',
       state: 'CO',
       zip: '81201',
-      phone: '(719) 539-7810',
-      website: 'https://absolutegallery.net',
-      tags: ['fine art', 'contemporary', 'paintings', 'sculpture', 'creative district'],
+      tags: ['fine art', 'artisan jewelry', 'Native American silver', 'paintings', 'sculpture', 'creative district'],
       isFeatured: true,
       isClaimed: true,
     },
     {
-      slug: 'the-decker-gallery',
-      name: 'The Decker Gallery',
-      shortDescription: 'Original Colorado landscape paintings and prints.',
+      slug: 'the-maverick-potter',
+      name: 'The Maverick Potter',
+      shortDescription: 'Working pottery studio and gallery — hand-thrown ceramics since 2008.',
       description:
-        'The Decker Gallery specializes in original landscape paintings capturing the raw beauty of ' +
-        'Colorado — the Arkansas River canyon, the Collegiate Peaks, and the high alpine meadows ' +
-        'of Chaffee County. Featuring plein air and studio works by local artists.',
+        'The Maverick Potter is a working studio and gallery featuring hand-thrown pottery ' +
+        'by owner Mark Rittmann and over 20 local and regional artists. ' +
+        'In addition to ceramics, the gallery carries hand-blown glass and handmade jewelry. ' +
+        'One of Salida\'s most beloved creative spaces since 2008 — a must-visit on the Creative District walk.',
       category: 'art-gallery',
       tier: 'premium',
-      address: '218 F Street',
+      address: '148 N F Street',
       city: 'Salida',
       state: 'CO',
       zip: '81201',
-      tags: ['landscape painting', 'Colorado art', 'plein air', 'prints', 'originals'],
+      phone: '(719) 539-5112',
+      tags: ['pottery', 'ceramics', 'hand-thrown', 'blown glass', 'handmade jewelry', 'working studio'],
       isFeatured: true,
       isClaimed: true,
     },
     {
-      slug: 'artyard-gallery',
-      name: 'Artyard Gallery',
-      shortDescription: 'Outdoor sculpture garden and working artist studios.',
+      slug: 'four-winds-gallery',
+      name: 'Four Winds Gallery',
+      shortDescription: 'Oil paintings, Colorado pottery, nature photography, and artisan jewelry.',
       description:
-        'Artyard Gallery is a unique outdoor art experience featuring a sculpture garden, ' +
-        'working artist studios, and rotating gallery exhibitions. One of Salida\'s most iconic ' +
-        'creative spaces, celebrating sculpture, ceramics, and large-format work in an open-air setting.',
-      category: 'art-gallery',
-      tier: 'premium',
-      address: '9140 W Highway 50',
-      city: 'Salida',
-      state: 'CO',
-      zip: '81201',
-      phone: '(719) 539-4998',
-      website: 'https://artyardsalida.com',
-      tags: ['sculpture', 'ceramics', 'outdoor art', 'studio visits', 'creative district'],
-      isFeatured: false,
-      isClaimed: true,
-    },
-    {
-      slug: 'spirit-of-the-rockies',
-      name: 'Spirit of the Rockies Gallery',
-      shortDescription: 'Western and wildlife art celebrating the American West.',
-      description:
-        'Spirit of the Rockies Gallery brings together the finest Western art, wildlife paintings, ' +
-        'and bronze sculpture in Colorado. A destination for collectors and art lovers who appreciate ' +
-        'the tradition and beauty of Rocky Mountain art.',
+        'Four Winds Gallery has been a fixture of downtown Salida since 2005, ' +
+        'featuring original oil paintings, mixed media work, Colorado pottery, ' +
+        'handmade jewelry, gourd art, and nature photography. ' +
+        'Owner Linda Frances curates a warm, welcoming space that captures the color and spirit of the Salida Creative District.',
       category: 'art-gallery',
       tier: 'free',
-      address: '131 F Street',
+      address: '118 F Street',
       city: 'Salida',
       state: 'CO',
       zip: '81201',
-      tags: ['western art', 'wildlife', 'bronze', 'Colorado', 'paintings'],
+      phone: '(719) 539-7459',
+      tags: ['oil paintings', 'mixed media', 'Colorado pottery', 'nature photography', 'handmade jewelry'],
       isFeatured: false,
       isClaimed: false,
     },
     {
-      slug: 'the-green-spot',
-      name: 'The Green Spot Gallery',
-      shortDescription: 'Contemporary art and functional ceramics by local makers.',
+      slug: 'brodeur-studio-gallery',
+      name: 'Brodeur Studio Gallery',
+      shortDescription: 'Colorful abstract and impressionistic paintings inspired by Colorado.',
       description:
-        'The Green Spot is a collective gallery showcasing contemporary art, functional ceramics, ' +
-        'handwoven textiles, and artisan jewelry made by Salida\'s own creative community. ' +
-        'A perfect stop for unique, locally made gifts and collectibles.',
+        'Brodeur Studio Gallery showcases the work of international artist Paulette Brodeur, ' +
+        'whose colorful paintings span abstract to impressionistic styles rooted in Colorado landscapes. ' +
+        'Established in 1994, the studio features original paintings, prints, and cards — ' +
+        'vibrant, expressive work that captures the light and energy of the Arkansas River valley.',
       category: 'art-gallery',
       tier: 'free',
-      address: '120 F Street',
+      address: '133 E Second Street',
       city: 'Salida',
       state: 'CO',
       zip: '81201',
-      tags: ['ceramics', 'contemporary', 'textiles', 'local artists', 'gifts'],
-      isFeatured: true,
+      tags: ['abstract', 'impressionistic', 'Colorado landscapes', 'paintings', 'prints'],
+      isFeatured: false,
       isClaimed: false,
     },
+    {
+      slug: 'bork-and-watkins-gallery',
+      name: 'Bork and Watkins Gallery',
+      shortDescription: 'Husband-wife gallery: landscape paintings and whimsical felted sculpture.',
+      description:
+        'Bork and Watkins Gallery is a unique husband-and-wife creative space featuring ' +
+        'Carl Bork\'s landscape paintings of the Colorado high country alongside ' +
+        'Karen Watkins\'s whimsical surreal paintings and delightful felted sculptures. ' +
+        'Open since 2010 at the corner of 1st and G — a charming and distinctive stop on the Creative District.',
+      category: 'art-gallery',
+      tier: 'free',
+      address: '149 W 1st Street',
+      city: 'Salida',
+      state: 'CO',
+      zip: '81201',
+      phone: '(216) 409-3679',
+      tags: ['landscape paintings', 'felted sculpture', 'whimsical', 'Colorado', 'husband and wife'],
+      isFeatured: false,
+      isClaimed: false,
+    },
+
     // ── Boutiques ──────────────────────────────────────────────────────────
     {
-      slug: 'current-boutique-salida',
-      name: 'Current Boutique',
-      shortDescription: 'Curated women\'s fashion and accessories in downtown Salida.',
+      slug: 'opal-boutique-salida',
+      name: 'Opal Boutique',
+      shortDescription: 'Curated women\'s fashion and accessories in the heart of downtown Salida.',
       description:
-        'Current Boutique brings carefully curated women\'s apparel, accessories, and footwear ' +
-        'to downtown Salida. Featuring emerging designers alongside established brands, ' +
-        'with a focus on versatile, wearable pieces for mountain-town life and beyond.',
+        'Opal Boutique brings modern, stylish women\'s apparel, accessories, and footwear ' +
+        'to downtown Salida\'s F Street. The carefully curated collection pairs wearable ' +
+        'everyday style with pieces that transition effortlessly from mountain trails to evening out. ' +
+        'A go-to destination for fashion in Colorado\'s most creative small town.',
       category: 'boutique',
       tier: 'premium',
-      address: '115 F Street',
+      address: '128 F Street',
       city: 'Salida',
       state: 'CO',
       zip: '81201',
-      tags: ['women\'s fashion', 'accessories', 'boutique', 'clothing', 'designer'],
+      phone: '(719) 539-2515',
+      tags: ['women\'s fashion', 'accessories', 'footwear', 'boutique', 'clothing'],
       isFeatured: true,
       isClaimed: true,
     },
     {
-      slug: 'wild-bird-boutique',
-      name: 'Wild Bird',
-      shortDescription: 'Bohemian clothing and lifestyle goods for the free spirit.',
+      slug: 'yolo-clothing-salida',
+      name: 'Yolo',
+      shortDescription: 'Eclectic casual clothing, footwear, and accessories for everyone.',
       description:
-        'Wild Bird is the destination for free-spirited fashion in Salida — boho-chic clothing, ' +
-        'handmade jewelry, crystals, candles, and lifestyle goods curated for those who live ' +
-        'adventurously and authentically.',
+        'Yolo on F Street carries an eclectic mix of casual clothing for men, women, and juniors, ' +
+        'alongside footwear, accessories, and gifts. Laid-back and fun, Yolo is a Salida staple ' +
+        'for relaxed Colorado style that works as well on the river as it does around town.',
       category: 'boutique',
       tier: 'free',
-      address: '220 F Street',
+      address: '100 F Street',
       city: 'Salida',
       state: 'CO',
       zip: '81201',
-      tags: ['bohemian', 'jewelry', 'crystals', 'lifestyle', 'women\'s clothing'],
+      phone: '(719) 539-2150',
+      tags: ['casual clothing', 'men\'s', 'women\'s', 'footwear', 'accessories', 'gifts'],
       isFeatured: false,
       isClaimed: false,
     },
     {
-      slug: 'mt-shavano-outfitters',
-      name: 'Mt. Shavano Outfitters',
-      shortDescription: 'Apparel and gear for Colorado mountain adventures.',
+      slug: 'drift-and-amble',
+      name: 'Drift & Amble',
+      shortDescription: 'Hand-printed apparel, letterpress cards, and Colorado-inspired gifts.',
       description:
-        'Mt. Shavano Outfitters equips adventurers with quality apparel and gear for hiking, ' +
-        'climbing, camping, and exploring the Sawatch Range. Featuring top brands alongside ' +
-        'Salida-exclusive apparel celebrating the 14ers above our town.',
+        'Drift & Amble is an independent printmaking studio and shop on N F Street, ' +
+        'offering hand-printed apparel, letterpress greeting cards, handmade jewelry, ' +
+        'and Colorado-inspired art prints. Everything is made with care and creative intention — ' +
+        'a perfect stop for gifts that feel as original as Salida itself.',
       category: 'boutique',
       tier: 'free',
-      address: '114 F Street',
+      address: '117 N F Street',
       city: 'Salida',
       state: 'CO',
       zip: '81201',
-      tags: ['outdoor apparel', '14ers', 'Colorado', 'hiking', 'climbing'],
+      phone: '(720) 507-9044',
+      tags: ['hand-printed apparel', 'letterpress', 'art prints', 'handmade jewelry', 'Colorado gifts'],
       isFeatured: false,
       isClaimed: false,
     },
+    {
+      slug: 'in-the-current-imports',
+      name: 'In The Current Imports',
+      shortDescription: 'Hand-curated art, clothing, jewelry, and home decor from around the world.',
+      description:
+        'In The Current Imports brings together hand-curated art, clothing, jewelry, and home decor ' +
+        'from diverse cultural traditions around the world. ' +
+        'The eclectic collection reflects Salida\'s creative, globally curious spirit — ' +
+        'a unique destination for travelers and locals seeking something truly one of a kind.',
+      category: 'boutique',
+      tier: 'free',
+      address: '114 E 1st Street',
+      city: 'Salida',
+      state: 'CO',
+      zip: '81201',
+      phone: '(719) 539-2321',
+      tags: ['imports', 'world clothing', 'global art', 'jewelry', 'home decor'],
+      isFeatured: false,
+      isClaimed: false,
+    },
+
     // ── Outdoor Gear ───────────────────────────────────────────────────────
     {
       slug: 'headwaters-outdoor',
       name: 'Headwaters Outdoor Equipment',
-      shortDescription: 'Arkansas River valley\'s premier outdoor gear shop.',
+      shortDescription: 'The Arkansas River valley\'s premier outdoor gear shop since 2003.',
       description:
         'Headwaters Outdoor Equipment is the go-to outfitter for river sports, climbing, hiking, ' +
-        'and all-season adventure in the Arkansas River valley. Stocking kayaks, SUPs, climbing gear, ' +
-        'backpacking essentials, and expert local knowledge since 2003.',
+        'and all-season adventure in the Arkansas River valley. ' +
+        'Stocking kayaks, SUPs, climbing gear, backpacking essentials, and technical apparel, ' +
+        'with expert staff who are active guides and athletes on the Arkansas. ' +
+        'An authorized Patagonia dealer and the anchor of Salida\'s outdoor retail scene since 2003.',
       category: 'outdoor-gear',
-      tier: 'sponsored',
+      tier: 'premium',
       address: '228 N F Street',
       city: 'Salida',
       state: 'CO',
       zip: '81201',
-      phone: '(719) 395-4100',
+      phone: '(719) 539-4506',
       website: 'https://headwatersoutdoor.com',
-      tags: ['kayaking', 'SUP', 'climbing', 'hiking', 'Arkansas River', 'rentals'],
+      tags: ['kayaking', 'SUP', 'climbing', 'hiking', 'Patagonia', 'Arkansas River', 'rentals'],
       isFeatured: true,
       isClaimed: true,
     },
     {
-      slug: 'salida-paddleboard',
-      name: 'Salida Paddleboard Company',
-      shortDescription: 'SUP rentals, lessons, and gear on the Arkansas River.',
+      slug: 'salida-mountain-sports',
+      name: 'Salida Mountain Sports',
+      shortDescription: 'Authorized North Face dealer — outdoor gear, apparel, and ski equipment.',
       description:
-        'Salida Paddleboard Company specializes in stand-up paddleboard rentals, guided tours, ' +
-        'and lessons on the Arkansas River. Whether you\'re a first-timer or seasoned paddler, ' +
-        'they have the gear and expertise to make your river day epic.',
+        'Salida Mountain Sports on N F Street is your full-service outdoor retailer for Salida\'s ' +
+        'four-season adventure scene. An authorized North Face dealer carrying outdoor gear, ' +
+        'technical apparel, footwear, camping supplies, and ski/snowboard equipment. ' +
+        'Whether you\'re gearing up for a 14er ascent or Monarch Mountain\'s slopes, this is your shop.',
       category: 'outdoor-gear',
-      tier: 'premium',
-      address: 'Riverside Park, Salida',
+      tier: 'free',
+      address: '110 N F Street',
       city: 'Salida',
       state: 'CO',
       zip: '81201',
-      tags: ['SUP', 'paddleboard', 'rentals', 'Arkansas River', 'lessons'],
+      phone: '(719) 539-4400',
+      website: 'https://salidamountainsports.com',
+      tags: ['North Face', 'outdoor gear', 'ski', 'snowboard', 'apparel', 'camping', '14ers'],
       isFeatured: false,
       isClaimed: false,
     },
+    {
+      slug: 'badfish-surf-shop',
+      name: 'Badfish Surf Shop',
+      shortDescription: 'River surfboards, SUPs, and paddleboard gear on the Arkansas.',
+      description:
+        'Badfish is a river surfing and paddleboard brand with its own Salida retail shop — ' +
+        'the only place in town to buy stand-up paddleboards, river surfboards, and surf-specific gear. ' +
+        'Staff are passionate river surfers and paddlers who know the Arkansas River\'s waves firsthand. ' +
+        'The perfect stop before hitting the water. Open Wednesday through Sunday.',
+      category: 'outdoor-gear',
+      tier: 'free',
+      address: '148 E 1st Street',
+      city: 'Salida',
+      state: 'CO',
+      zip: '81201',
+      website: 'https://badfishsup.com',
+      tags: ['paddleboard', 'SUP', 'river surfing', 'Arkansas River', 'water sports'],
+      isFeatured: false,
+      isClaimed: false,
+    },
+    {
+      slug: 'bluebird-mountain-sports',
+      name: 'Bluebird Mountain Sports',
+      shortDescription: 'Ski and snowboard sales, rentals, and outdoor sports gear at Mt. Shavano.',
+      description:
+        'Bluebird Mountain Sports — formerly the legendary Mt. Shavano Ski Shop — ' +
+        'is Salida\'s destination for ski and snowboard equipment sales and rentals, ' +
+        'plus year-round outdoor sports gear. ' +
+        'Located on US-50 at the base of Mt. Shavano\'s access road, ' +
+        'it\'s the closest full-service ski shop to Monarch Mountain.',
+      category: 'outdoor-gear',
+      tier: 'free',
+      address: '16101 US-50',
+      city: 'Salida',
+      state: 'CO',
+      zip: '81201',
+      phone: '(719) 539-3240',
+      website: 'https://bluebird.online',
+      tags: ['ski', 'snowboard', 'rentals', 'Monarch Mountain', 'outdoor gear', 'Mt. Shavano'],
+      isFeatured: false,
+      isClaimed: false,
+    },
+
     // ── Vintage & Antique ──────────────────────────────────────────────────
     {
-      slug: 'salida-antique-market',
-      name: 'Salida Antique Market',
-      shortDescription: 'Multi-dealer antique market with Colorado treasures.',
+      slug: 'ruby-blues',
+      name: 'Ruby Blues',
+      shortDescription: 'Vintage clothing, vinyl records, bicycles, and curated secondhand finds.',
       description:
-        'Salida Antique Market is a sprawling multi-dealer market featuring furniture, ' +
-        'vintage clothing, collectibles, Western memorabilia, Victorian jewelry, ' +
-        'mid-century modern pieces, and everything in between. New inventory arrives weekly.',
-      category: 'vintage-antique',
-      tier: 'premium',
-      address: '130 W Rainbow Blvd',
-      city: 'Salida',
-      state: 'CO',
-      zip: '81201',
-      tags: ['antiques', 'vintage', 'furniture', 'collectibles', 'Western', 'jewelry'],
-      isFeatured: true,
-      isClaimed: true,
-    },
-    {
-      slug: 'river-curbside-vintage',
-      name: 'River Curbside Vintage',
-      shortDescription: 'Curated vintage clothing and accessories.',
-      description:
-        'River Curbside Vintage is Salida\'s spot for carefully curated vintage and secondhand ' +
-        'clothing, accessories, and home goods. Each piece is hand-selected for quality, style, ' +
-        'and uniqueness — sustainable fashion with serious character.',
+        'Ruby Blues is Salida\'s beloved vintage and secondhand shop on N F Street, ' +
+        'carrying vintage clothing, vinyl records, bicycles, kitchenware, shoes, and housewares. ' +
+        'Every visit turns up something unexpected — this is the kind of shop that makes Salida shopping special. ' +
+        'Sustainable, eclectic, and deeply Salida.',
       category: 'vintage-antique',
       tier: 'free',
-      address: 'F Street',
+      address: '102 N F Street',
       city: 'Salida',
       state: 'CO',
       zip: '81201',
-      tags: ['vintage clothing', 'secondhand', 'sustainable', 'accessories', 'thrift'],
+      phone: '(719) 539-2268',
+      tags: ['vintage clothing', 'vinyl records', 'bicycles', 'secondhand', 'thrift', 'housewares'],
       isFeatured: false,
       isClaimed: false,
     },
+    {
+      slug: 'true-vintage-finds',
+      name: 'True Vintage Finds & Home Goods',
+      shortDescription: 'Multi-vendor antique and vintage market on F Street.',
+      description:
+        'True Vintage Finds & Home Goods is a multi-vendor space at 134 F Street ' +
+        'packed with antiques, vintage clothing, jewelry, home goods, vintage decor, and old books. ' +
+        'Recently relocated to this downtown location, it\'s grown into one of Salida\'s ' +
+        'favorite vintage hunting grounds — new vendors and inventory arriving regularly.',
+      category: 'vintage-antique',
+      tier: 'free',
+      address: '134 F Street',
+      city: 'Salida',
+      state: 'CO',
+      zip: '81201',
+      phone: '(719) 239-2000',
+      tags: ['antiques', 'vintage clothing', 'home goods', 'vintage decor', 'jewelry', 'old books'],
+      isFeatured: false,
+      isClaimed: false,
+    },
+    {
+      slug: 'old-log-cabin-antiques',
+      name: 'Old Log Cabin Antiques',
+      shortDescription: 'Five authentic log cabins filled with antiques — a Salida landmark for 50 years.',
+      description:
+        'Old Log Cabin Antiques is one of Salida\'s most enduring businesses, ' +
+        'with five authentic log cabins filled with antiques, furniture, housewares, artwork, ' +
+        'outdoor accessories, quilts, glassware, and collectibles. ' +
+        'Open seven days a week, 9:30 AM to 5 PM. ' +
+        'Approaching its 50th anniversary — a true Colorado treasure on US-50.',
+      category: 'vintage-antique',
+      tier: 'free',
+      address: '225 E Hwy 50',
+      city: 'Salida',
+      state: 'CO',
+      zip: '81201',
+      phone: '(719) 207-3143',
+      tags: ['antiques', 'furniture', 'quilts', 'glassware', 'collectibles', 'log cabin', 'landmark'],
+      isFeatured: false,
+      isClaimed: false,
+    },
+
     // ── Gift Shops ─────────────────────────────────────────────────────────
     {
-      slug: 'mountain-made-gifts',
-      name: 'Mountain Made',
-      shortDescription: 'Colorado-made gifts, art, and souvenirs.',
+      slug: 'fattees',
+      name: 'Fattees',
+      shortDescription: 'Screen-printed t-shirts, hoodies, and apparel designed by local Salida artists.',
       description:
-        'Mountain Made curates the best of Colorado-crafted gifts: locally made pottery, ' +
-        'artisan food products, photography prints, jewelry, and clothing celebrating the ' +
-        'Arkansas River valley and Salida\'s creative spirit. Perfect gifts for any budget.',
+        'Fattees on F Street has been printing bold, creative apparel with Salida-area designs ' +
+        'for locals and visitors alike. Custom screen printing, hoodies, hats, stickers, ' +
+        'and apparel featuring designs by local artists make Fattees a one-stop shop ' +
+        'for Colorado keepsakes with real local character. Open daily 10 AM to 5 PM.',
       category: 'gift-shop',
       tier: 'free',
-      address: '105 F Street',
+      address: '115 F Street',
       city: 'Salida',
       state: 'CO',
       zip: '81201',
-      tags: ['Colorado gifts', 'local art', 'pottery', 'souvenirs', 'handmade'],
+      phone: '(719) 539-4599',
+      website: 'https://fattees-printing.com',
+      tags: ['t-shirts', 'screen printing', 'hoodies', 'local art', 'custom apparel', 'Colorado souvenirs'],
       isFeatured: false,
       isClaimed: false,
     },
     {
-      slug: 'salida-soap-company',
-      name: 'Salida Soap Company',
-      shortDescription: 'Handcrafted soaps, bath goods, and skincare.',
+      slug: 'blueflower-candies',
+      name: 'Blueflower Candies & Provisions',
+      shortDescription: 'Fudge, chocolates, and 600+ candy varieties from around the world.',
       description:
-        'Salida Soap Company makes small-batch, handcrafted soaps and bath products using ' +
-        'natural Colorado ingredients. Scented with local botanicals and alpine herbs, ' +
-        'their products make perfect gifts for yourself or someone you love.',
+        'Blueflower Candies & Provisions brings serious candy craft to downtown Salida — ' +
+        'fudge made fresh daily, nostalgic candy organized by decade, ' +
+        'and over 600 SKUs of confectionery from around the world. ' +
+        'Whether you\'re shopping for a gift box or a childhood favorite, Blueflower has it. ' +
+        'From the same family behind beloved locations in Leadville and Buena Vista.',
       category: 'gift-shop',
       tier: 'free',
-      address: 'Downtown Salida',
+      address: '132 F Street',
       city: 'Salida',
       state: 'CO',
       zip: '81201',
-      tags: ['soap', 'bath', 'handmade', 'natural', 'gifts', 'skincare'],
+      tags: ['candy', 'fudge', 'chocolate', 'sweets', 'gifts', 'nostalgic candy'],
+      isFeatured: true,
+      isClaimed: false,
+    },
+    {
+      slug: 'dragonfly-gifts',
+      name: 'Dragonfly Gifts',
+      shortDescription: 'Crystals, gemstone jewelry, Raku pottery, candles, and artisan gifts.',
+      description:
+        'Dragonfly Gifts on F Street is a Salida institution for crystals, ' +
+        'gemstone jewelry, Himalayan salt lamps, Raku pottery, incense, candles, ' +
+        'and Woodstock wind chimes. ' +
+        'The kind of shop you\'ll spend longer in than you planned — ' +
+        'perfect for gifts, personal treasures, or simply browsing the magical selection. ' +
+        'Open Monday through Saturday 10 AM to 5 PM, Sunday from noon.',
+      category: 'gift-shop',
+      tier: 'free',
+      address: '221 F Street',
+      city: 'Salida',
+      state: 'CO',
+      zip: '81201',
+      phone: '(719) 539-4448',
+      tags: ['crystals', 'gemstone jewelry', 'Raku pottery', 'candles', 'Himalayan salt lamp', 'wind chimes', 'incense'],
       isFeatured: false,
       isClaimed: false,
     },
+
     // ── Jewelry & Artisan ──────────────────────────────────────────────────
     {
-      slug: 'studio-h-jewelry',
-      name: 'Studio H Jewelry',
-      shortDescription: 'Handcrafted fine jewelry in sterling silver and gold.',
+      slug: 'krivanek-jewelers',
+      name: 'Krivanek Jewelers',
+      shortDescription: 'Custom jewelry design, fine gemstones, and expert jewelry repair.',
       description:
-        'Studio H Jewelry creates original, handcrafted fine jewelry inspired by the Colorado ' +
-        'landscape. Each piece is designed and made in-studio in Salida, using sterling silver, ' +
-        '14k gold, and locally sourced gemstones. Custom commissions welcome.',
+        'Krivanek Jewelers — also known as GemFactory — is Salida\'s destination for ' +
+        'custom jewelry design, fine gemstones, and professional jewelry repair. ' +
+        'With an on-site studio, they create one-of-a-kind pieces from scratch or remake ' +
+        'treasured heirlooms. Colorado sapphires, turquoise, and rare gemstones are a specialty. ' +
+        'Open Tuesday through Saturday, 10 AM to 5 PM.',
       category: 'jewelry-artisan',
       tier: 'premium',
-      address: '212 F Street',
+      address: '101 F Street',
       city: 'Salida',
       state: 'CO',
       zip: '81201',
-      tags: ['jewelry', 'sterling silver', 'gold', 'handcrafted', 'custom', 'Colorado'],
+      phone: '(719) 539-7493',
+      tags: ['custom jewelry', 'gemstones', 'Colorado sapphires', 'turquoise', 'jewelry repair', 'fine jewelry'],
       isFeatured: true,
       isClaimed: true,
     },
     {
-      slug: 'river-rock-jewelers',
-      name: 'River Rock Jewelers',
-      shortDescription: 'Fine jewelry and custom design studio downtown.',
+      slug: 'riveting-experience-jewelry',
+      name: 'Riveting Experience Jewelry',
+      shortDescription: 'Wine-and-design jewelry studio — make your own piece with expert guidance.',
       description:
-        'River Rock Jewelers offers fine jewelry, engagement rings, and custom design services ' +
-        'in downtown Salida. With an on-site studio, they create one-of-a-kind pieces featuring ' +
-        'Colorado sapphires, turquoise, and other precious stones.',
+        'Riveting Experience Jewelry is Salida\'s unique wine-and-design jewelry studio, ' +
+        'where you sit down with experienced metalsmiths to create your own handcrafted piece. ' +
+        'Sip wine, learn metalsmithing basics, and leave with something you actually made. ' +
+        'Perfect for date nights, bachelorette parties, or anyone who wants a truly personal souvenir.',
       category: 'jewelry-artisan',
       tier: 'free',
-      address: 'F Street, Salida',
+      address: '121 N F Street',
       city: 'Salida',
       state: 'CO',
       zip: '81201',
-      tags: ['fine jewelry', 'engagement rings', 'custom design', 'Colorado sapphires'],
+      phone: '(719) 530-3032',
+      tags: ['make your own jewelry', 'metalsmithing', 'wine and design', 'studio', 'unique experience'],
       isFeatured: false,
       isClaimed: false,
     },
+
     // ── Markets ────────────────────────────────────────────────────────────
     {
       slug: 'salida-farmers-market',
       name: 'Salida Farmers Market',
-      shortDescription: 'Saturday morning farmers market — May through October.',
+      shortDescription: 'Saturday farmers market at Alpine Park — June through October.',
       description:
-        'The Salida Farmers Market brings together the best of Chaffee County\'s farmers, ranchers, ' +
-        'bakers, and artisans every Saturday morning from May through October. Fresh produce, ' +
-        'grass-fed meats, artisan breads, local honey, handmade crafts, and live music.',
+        'The Salida Farmers Market is held every Saturday morning from June through October ' +
+        'at Alpine Park, 404 E Street (corner of 5th & E Street) in downtown Salida. ' +
+        'Operated by the Foodshed Alliance, the market brings together Chaffee County\'s ' +
+        'farmers, ranchers, bakers, and artisans: fresh produce, grass-fed meats, ' +
+        'artisan breads, local honey, handmade crafts, and live music. ' +
+        'The perfect complement to a morning of gallery and boutique shopping on F Street.',
       category: 'market',
       tier: 'free',
-      address: 'City Park, Salida',
+      address: 'Alpine Park, 404 E Street',
       city: 'Salida',
       state: 'CO',
       zip: '81201',
       website: 'https://salidafarmersmarket.com',
-      tags: ['farmers market', 'fresh produce', 'artisan', 'Saturday', 'seasonal', 'local food'],
+      tags: ['farmers market', 'fresh produce', 'artisan', 'Saturday', 'seasonal', 'local food', 'live music'],
       isFeatured: true,
       isClaimed: false,
     },
-    {
-      slug: 'salida-artisan-market',
-      name: 'Salida Artisan Market',
-      shortDescription: 'Year-round artisan market in the Salida Creative District.',
-      description:
-        'The Salida Artisan Market is a year-round destination for handmade goods from Chaffee ' +
-        'County\'s most talented makers — pottery, jewelry, textiles, woodwork, and more. ' +
-        'Located in the heart of the Creative District.',
-      category: 'market',
-      tier: 'free',
-      address: 'Salida Creative District',
-      city: 'Salida',
-      state: 'CO',
-      zip: '81201',
-      tags: ['artisan market', 'handmade', 'pottery', 'jewelry', 'textiles', 'creative district'],
-      isFeatured: false,
-      isClaimed: false,
-    },
+
     // ── Home & Decor ───────────────────────────────────────────────────────
     {
-      slug: 'the-alpine-home',
-      name: 'The Alpine Home',
-      shortDescription: 'Curated home goods, furniture, and interior design.',
+      slug: 'limber-grove-salida',
+      name: 'Limber Grove',
+      shortDescription: 'Women\'s clothing, apothecary, candles, and gifts from 100+ Colorado makers.',
       description:
-        'The Alpine Home is Salida\'s destination for beautifully curated home décor, ' +
-        'furniture, lighting, and accessories. Blending rustic mountain aesthetics with ' +
-        'contemporary design, the shop offers one-of-a-kind pieces for Colorado homes.',
+        'Limber Grove on N F Street carries women\'s clothing alongside an exceptional selection ' +
+        'of apothecary items, candles, and locally sourced gifts from over 100 Colorado makers. ' +
+        'The shop reflects the spirit of Colorado\'s creative small towns — beautiful, intentional, ' +
+        'and rooted in local craft. A Breckenridge-born brand that has found a perfect home in Salida.',
       category: 'home-decor',
       tier: 'free',
-      address: 'F Street',
+      address: '143 N F Street',
       city: 'Salida',
       state: 'CO',
       zip: '81201',
-      tags: ['home décor', 'furniture', 'interior design', 'mountain style', 'Colorado'],
+      tags: ['women\'s clothing', 'apothecary', 'candles', 'Colorado makers', 'gifts', 'home goods'],
       isFeatured: false,
       isClaimed: false,
     },
-    // ── Featured Partners — Day Trip Adventure (Canon City / Royal Gorge) ──────
+
+    // ── Books & Music ──────────────────────────────────────────────────────
+    {
+      slug: 'salida-books',
+      name: 'Salida Books',
+      shortDescription: 'Independent bookstore with new and used books in the heart of downtown.',
+      description:
+        'Salida Books is the town\'s beloved independent bookstore, carrying new and used ' +
+        'fiction, non-fiction, classics, and a well-stocked children\'s section. ' +
+        'The kind of bookstore you browse for hours, leave with more than you planned, ' +
+        'and return to every visit. Open Monday and Wednesday through Sunday, 10 AM to 6 PM.',
+      category: 'books-music',
+      tier: 'free',
+      address: '109 N F Street, Suite A',
+      city: 'Salida',
+      state: 'CO',
+      zip: '81201',
+      phone: '(719) 626-1377',
+      tags: ['books', 'independent bookstore', 'new books', 'used books', 'children\'s books', 'fiction'],
+      isFeatured: false,
+      isClaimed: false,
+    },
+    {
+      slug: 'suttys-downtown-records',
+      name: "Sutty's Downtown Records & Arts",
+      shortDescription: 'Boutique vinyl record shop and contemporary art gallery combined.',
+      description:
+        "Sutty's Downtown Records & Arts is Salida's unique pairing of a vinyl record shop " +
+        'and contemporary art gallery — two creative worlds that belong together. ' +
+        'Browse new LPs alongside fresh, affordable contemporary art in a laid-back atmosphere. ' +
+        "A must for music and art lovers, and one of Salida's most original retail spaces.",
+      category: 'books-music',
+      tier: 'free',
+      address: '110 E 1st Street',
+      city: 'Salida',
+      state: 'CO',
+      zip: '81201',
+      tags: ['vinyl records', 'LP', 'contemporary art', 'record shop', 'music', 'gallery'],
+      isFeatured: false,
+      isClaimed: false,
+    },
+
+    // ── Food & Specialty ───────────────────────────────────────────────────
+    {
+      slug: 'arlies-jug-liquors',
+      name: "Arlie Dale's Jug Liquors",
+      shortDescription: "Salida's oldest downtown liquor store — beer, wine, and spirits.",
+      description:
+        "Arlie Dale's Jug Liquors at 220 N F Street is a Salida institution — " +
+        "the longest-running liquor store at this downtown location. " +
+        'Stocking a strong selection of craft beers, Colorado wines, and spirits from around the world. ' +
+        'A convenient stop before heading to the river, the mountains, or a vacation rental.',
+      category: 'food-specialty',
+      tier: 'free',
+      address: '220 N F Street',
+      city: 'Salida',
+      state: 'CO',
+      zip: '81201',
+      phone: '(719) 539-0111',
+      website: 'https://jugliquors.com',
+      tags: ['liquor', 'beer', 'wine', 'spirits', 'craft beer', 'Colorado wine'],
+      isFeatured: false,
+      isClaimed: false,
+    },
+
+    // ── Featured Partners — Day Trip Adventure (Canon City / Royal Gorge) ──
     {
       slug: 'royal-gorge-rafting',
       name: 'Royal Gorge Rafting',
@@ -418,7 +637,6 @@ async function main() {
       phone: '(719) 275-7238',
       website: 'https://royalgorgerafting.net',
       bookingUrl: 'https://royalgorgerafting.net',
-      heroImageUrl: '/images/businesses/rafting.jpg',
       tags: ['rafting', 'whitewater', 'Royal Gorge', 'day trip', 'adventure', 'featured partner'],
       isFeatured: true,
       isClaimed: true,
@@ -441,7 +659,6 @@ async function main() {
       phone: '(719) 275-7238',
       website: 'https://royalgorgeziplinetours.com',
       bookingUrl: 'https://royalgorgeziplinetours.com',
-      heroImageUrl: '/images/businesses/zipline.jpeg',
       tags: ['zipline', 'Royal Gorge', 'day trip', 'adventure', 'canyon views', 'featured partner'],
       isFeatured: true,
       isClaimed: true,
@@ -463,12 +680,12 @@ async function main() {
       phone: '(719) 275-7238',
       website: 'https://royalgorgevacationrentals.com',
       bookingUrl: 'https://royalgorgevacationrentals.com',
-      heroImageUrl: '/images/businesses/airstream.jpg',
       tags: ['glamping', 'Airstream', 'yurt', 'vacation rental', 'Royal Gorge', 'featured partner'],
       isFeatured: true,
       isClaimed: true,
     },
-    // ── Featured Partners — Dining Near the Gorge (Canon City) ────────────────
+
+    // ── Featured Partners — Dining Near the Gorge (Canon City) ────────────
     {
       slug: 'whitewater-bar-grill',
       name: 'Whitewater Bar & Grill',
@@ -477,7 +694,7 @@ async function main() {
         'Whitewater Bar & Grill is the go-to post-adventure spot in Canon City — great burgers, local Colorado craft beers, ' +
         'and a lively atmosphere that welcomes rafters, hikers, and Salida shoppers alike. ' +
         'Open seasonally April 17 through October 31. ' +
-        'Located in downtown Canon City, 45 minutes east of Salida on US-50.',
+        'Located in Canon City, 45 minutes east of Salida on US-50.',
       category: 'food-specialty',
       tier: 'sponsored',
       address: 'Canon City',
@@ -486,7 +703,6 @@ async function main() {
       zip: '81212',
       phone: '(719) 269-1009',
       website: 'https://whitewaterbar.com',
-      heroImageUrl: '/images/businesses/wwbg-patio.jpg',
       tags: ['bar and grill', 'burgers', 'craft beer', 'Canon City dining', 'featured partner', 'seasonal'],
       isFeatured: true,
       isClaimed: true,
@@ -507,47 +723,9 @@ async function main() {
       zip: '81212',
       phone: '(719) 451-7241',
       website: 'https://wwrooftopsocial.com',
-      heroImageUrl: '/images/businesses/rt-rooftop.webp',
       tags: ['rooftop dining', 'cocktails', 'Canon City', 'dinner', 'featured partner', 'year-round'],
       isFeatured: true,
       isClaimed: true,
-    },
-    // ── Food & Specialty ───────────────────────────────────────────────────
-    {
-      slug: 'salida-wine-and-spirits',
-      name: 'Salida Wine & Spirits',
-      shortDescription: 'Curated wine shop and local craft spirits.',
-      description:
-        'Salida Wine & Spirits offers a thoughtfully curated selection of wines from around the ' +
-        'world alongside Colorado craft spirits, local beers, and artisan non-alcoholic beverages. ' +
-        'The knowledgeable staff provides expert pairings for every occasion.',
-      category: 'food-specialty',
-      tier: 'free',
-      address: 'Downtown Salida',
-      city: 'Salida',
-      state: 'CO',
-      zip: '81201',
-      tags: ['wine', 'spirits', 'craft beer', 'Colorado spirits', 'gifts'],
-      isFeatured: false,
-      isClaimed: false,
-    },
-    {
-      slug: 'rocky-mountain-chocolate',
-      name: 'Rocky Mountain Chocolate',
-      shortDescription: 'Hand-dipped chocolates and fudge made fresh daily.',
-      description:
-        'Rocky Mountain Chocolate in Salida handcrafts gourmet chocolates, fudge, caramel apples, ' +
-        'and truffles daily. A must-stop sweet treat in downtown Salida, beloved by locals ' +
-        'and visitors alike.',
-      category: 'food-specialty',
-      tier: 'free',
-      address: 'F Street, Salida',
-      city: 'Salida',
-      state: 'CO',
-      zip: '81201',
-      tags: ['chocolate', 'fudge', 'candy', 'sweets', 'gifts', 'handmade'],
-      isFeatured: false,
-      isClaimed: false,
     },
   ]
 
@@ -595,9 +773,9 @@ The Salida Creative District encompasses the historic downtown blocks centered a
 
 ## The Galleries
 
-Salida's gallery scene is extraordinary for a town of its size (population ~5,000). From **Absolute Gallery** on F Street to the outdoor sculpture experience at **Artyard**, you can spend an entire day gallery-hopping without leaving downtown.
+Salida's gallery scene is extraordinary for a town of its size (population ~5,000). From **Eye Candy Art and Treasure** (118 N F Street) — representing 40+ artists across paintings, sculpture, and artisan jewelry — to the working pottery studios at **The Maverick Potter** (148 N F Street), you can spend an entire day gallery-hopping without leaving downtown.
 
-Many galleries represent both local Colorado artists and nationally recognized names. The focus spans traditional Western landscapes, cutting-edge contemporary work, ceramics, sculpture, fiber arts, photography, and everything between.
+**Four Winds Gallery** (118 F Street) has been a downtown fixture since 2005, and **Bork and Watkins Gallery** (149 W 1st Street) brings a distinctive husband-and-wife perspective with landscape paintings and whimsical felted sculpture. Many galleries participate in the monthly FIRSTfriday openings and the summer ArtWalk series.
 
 ## Why Salida?
 
@@ -619,36 +797,42 @@ The **Salida ArtWalk** is the best way to experience everything at once. Held th
       slug: 'best-boutiques-downtown-salida',
       title: 'The Best Boutiques in Downtown Salida, Colorado',
       excerpt:
-        "From bohemian clothing to outdoor apparel and curated women's fashion, downtown Salida has a boutique for every style. Here's our guide to the best shopping on F Street.",
+        "From hand-printed apparel to curated women's fashion and world imports, downtown Salida has a boutique for every style. Here's our guide to the best shopping on F Street.",
       content: `# The Best Boutiques in Downtown Salida, Colorado
 
 Shopping in Salida isn't like shopping anywhere else in Colorado. The boutiques along **F Street** and the surrounding historic downtown blocks are a reflection of the town itself: creative, independent, a little wild, and deeply authentic.
 
 ## What to Expect
 
-Forget big-box stores and chain retail. Salida's boutiques are owner-operated, with personalities as distinct as the mountains that surround them. You'll find everything from high-end women's fashion to outdoor adventure apparel, bohemian lifestyle goods, and locally made gifts.
+Forget big-box stores and chain retail. Salida's boutiques are owner-operated, with personalities as distinct as the mountains that surround them. You'll find everything from curated women's fashion to hand-printed apparel, global imports, and locally sourced gifts.
 
 ## Top Boutiques to Visit
 
-### Current Boutique
-One of Salida's most beloved women's shops, Current Boutique curates a thoughtful mix of emerging designers and versatile everyday pieces. Perfect for the woman who lives adventurously and dresses accordingly.
+### Opal Boutique
+Located at 128 F Street, Opal is Salida's premier women's fashion destination — modern, stylish apparel, accessories, and footwear curated for mountain-town life and beyond. Open Monday through Saturday 10 AM to 5 PM, Sunday 11 AM to 4:30 PM. Call (719) 539-2515.
 
-### Wild Bird
-If you're drawn to crystals, flowing fabrics, and handmade jewelry, Wild Bird is your place. The vibe is unmistakably Salida: free-spirited, colorful, and full of meaning.
+### Drift & Amble
+An independent printmaking studio and shop at 117 N F Street, Drift & Amble offers hand-printed apparel, letterpress greeting cards, handmade jewelry, and Colorado-inspired art prints. Everything is made with creative intention — perfect for gifts with real local character.
 
-### Mt. Shavano Outfitters
-Named for the 14,229-ft peak looming over town, Mt. Shavano Outfitters stocks quality outdoor apparel and gear alongside Salida-branded clothing celebrating the Collegiate Peaks. A must-stop for hikers and climbers visiting the area.
+### Salida Mountain Sports
+At 110 N F Street, Salida Mountain Sports is an authorized North Face dealer stocking outdoor apparel alongside technical gear. The go-to for hikers, climbers, and skiers looking to dress for the adventure ahead. Call (719) 539-4400.
+
+### In The Current Imports
+At 114 E 1st Street, In The Current brings hand-curated art, clothing, jewelry, and home decor from diverse cultural traditions around the world — an eclectic, globally curious shop perfectly suited to Salida's spirit.
+
+### Yolo
+The casual, laid-back counterpart to Salida's boutique scene: 100 F Street carries clothing for men, women, and juniors alongside footwear and accessories. Great for relaxed Colorado style that works on the river or around town.
 
 ## Shopping Tips
 
-- **Go on a Saturday** to combine boutique shopping with the Salida Farmers Market
+- **Go on a Saturday** to combine boutique shopping with the Salida Farmers Market (Alpine Park, 404 E Street)
 - **First Fridays** (June–September) keep stores open late with the ArtWalk crowd — a festive shopping night
 - Most boutiques are within a 5-minute walk of each other along F Street
 - Look for the **Shop Salida** premium badge — verified listings with full hours, photos, and contact details
 
 Browse all boutiques in our [directory](/directory?category=boutique).`,
       metaDescription:
-        "Discover the best boutiques in downtown Salida, Colorado — women's fashion, outdoor apparel, and bohemian lifestyle shops along historic F Street.",
+        "Discover the best boutiques in downtown Salida, Colorado — women's fashion, hand-printed apparel, outdoor gear, and global imports along historic F Street.",
       tags: ['salida boutiques', 'downtown salida shopping', 'salida colorado', 'f street shops'],
       isPublished: true,
       publishedAt: new Date('2024-07-01'),
@@ -667,16 +851,26 @@ Naturally, the gear shops here reflect that abundance of adventure.
 
 ## Headwaters Outdoor Equipment
 
-The anchor of Salida's outdoor retail scene, Headwaters has been outfitting river runners, climbers, and hikers in the Arkansas River valley since 2003. Their staff are local experts — many are guides on the Arkansas — and they stock an exceptional selection of:
+The anchor of Salida's outdoor retail scene, Headwaters has been outfitting river runners, climbers, and hikers in the Arkansas River valley since 2003. An authorized Patagonia dealer, their staff are local experts — many are guides on the Arkansas — and they stock an exceptional selection of:
 
 - Kayaks, SUPs, and river gear (sales + rentals)
 - Rock climbing hardware and footwear
 - Backpacking equipment for 14er approaches
 - Technical apparel for all seasons
 
-## Salida Paddleboard Company
+228 N F Street | (719) 539-4506
 
-For flat-water fun on the Arkansas, Salida Paddleboard Company rents and sells stand-up paddleboards, with guided tours and beginner lessons available throughout summer. A fantastic option for families and casual paddlers.
+## Badfish Surf Shop
+
+For stand-up paddleboarding and river surfing, Badfish Surf Shop at 148 E 1st Street is your source. Badfish is a respected river surfing brand with its own Salida retail location — staff are passionate paddlers with deep knowledge of the Arkansas River's best runs and wave spots. Open Wednesday through Sunday.
+
+## Salida Mountain Sports
+
+An authorized North Face dealer at 110 N F Street, Salida Mountain Sports carries a full range of outdoor gear, apparel, footwear, camping supplies, and ski/snowboard equipment. The go-to for hikers heading into the Sawatch Range or skiers bound for Monarch Mountain. Call (719) 539-4400.
+
+## Bluebird Mountain Sports
+
+Formerly the legendary Mt. Shavano Ski Shop, Bluebird Mountain Sports (16101 US-50) specializes in ski and snowboard sales and rentals — the closest full-service ski shop to Monarch Mountain, open daily. Call (719) 539-3240.
 
 ## Before You Head Out
 
@@ -684,7 +878,7 @@ The Arkansas River through Browns Canyon runs best in **May and June** during sn
 
 Check our [directory](/directory?category=outdoor-gear) for the full list of outdoor retailers in Salida.`,
       metaDescription:
-        'Find the best outdoor gear shops in Salida, Colorado for Arkansas River adventures, 14er hikes, and mountain biking. Your guide to Headwaters, Salida Paddleboard, and more.',
+        'Find the best outdoor gear shops in Salida, Colorado for Arkansas River adventures, 14er hikes, and mountain biking. Headwaters Outdoor, Badfish Surf Shop, Salida Mountain Sports, and more.',
       tags: ['salida outdoor gear', 'arkansas river', 'salida colorado', 'kayaking', '14ers', 'mountain biking'],
       isPublished: true,
       publishedAt: new Date('2024-08-01'),
@@ -694,7 +888,7 @@ Check our [directory](/directory?category=outdoor-gear) for the full list of out
       slug: 'salida-artisan-jewelry-makers',
       title: "Salida's Artisan Jewelry Makers: Handcrafted Colorado Gems",
       excerpt:
-        "Colorado sapphires, turquoise, and locally mined gemstones set in sterling silver and gold — Salida's jewelry makers create wearable art rooted in the Rocky Mountain landscape.",
+        "Colorado sapphires, turquoise, and custom-made pieces crafted in-studio — Salida's jewelry makers create wearable art rooted in the Rocky Mountain landscape.",
       content: `# Salida's Artisan Jewelry Makers: Handcrafted Colorado Gems
 
 There's something special about wearing a piece of jewelry made by hand in a mountain town. In Salida, the jewelry-making tradition runs deep — part of the broader Creative District culture that has attracted craftspeople and artisans from across the country.
@@ -703,29 +897,29 @@ There's something special about wearing a piece of jewelry made by hand in a mou
 
 Several factors set Salida's jewelry scene apart:
 
-**Colorado-sourced materials.** The state is home to the world's only significant deposit of blue sapphires — the **Yogo sapphires** of Montana's neighbor — alongside Colorado turquoise, rare Colorado red beryl, and smoky quartz from the Pike's Peak region. Many Salida jewelers incorporate these local stones.
+**Colorado-sourced materials.** The state is home to remarkable gemstones — Colorado turquoise, Colorado sapphires, smoky quartz from the Pikes Peak region, and rare specimens found throughout the Rockies. Many Salida jewelers incorporate these local stones.
 
-**Studio-made.** Unlike mass-produced souvenir jewelry, Salida's artisan pieces are designed and fabricated on-site. When you buy from a studio like **Studio H Jewelry**, you're buying directly from the maker.
+**Studio-made.** Unlike mass-produced souvenir jewelry, Salida's artisan pieces are designed and fabricated on-site. When you buy from a studio like **Krivanek Jewelers**, you're buying directly from the maker.
 
 **Mountain aesthetic.** Designs tend toward organic forms — river stone settings, branch-like metalwork, mountain silhouettes — reflecting the landscape outside the studio window.
 
-## Studio H Jewelry
+## Krivanek Jewelers
 
-Studio H is one of Salida's most celebrated jewelry studios, creating original fine jewelry in sterling silver and 14k gold. Custom commissions are a specialty — perfect for engagement rings, anniversary pieces, or memorial jewelry.
+Also known as GemFactory, Krivanek Jewelers at 101 F Street is Salida's destination for custom jewelry design, fine gemstones, and expert jewelry repair. With an on-site studio, they create one-of-a-kind pieces featuring Colorado sapphires, turquoise, and other precious stones. Custom commissions are a specialty — perfect for engagement rings, anniversary pieces, or memorial jewelry. Open Tuesday through Saturday, 10 AM to 5 PM. Call (719) 539-7493.
 
-## River Rock Jewelers
+## Riveting Experience Jewelry
 
-River Rock combines traditional fine jewelry with a Colorado edge — Colorado sapphires and turquoise feature prominently, alongside classic diamond settings. Their custom design studio can work from a sketch or a dream.
+For something truly unforgettable, Riveting Experience Jewelry at 121 N F Street offers a wine-and-design make-your-own jewelry experience. Sit down with experienced metalsmiths, sip wine, learn the basics of metalsmithing, and leave with a handcrafted piece you actually made yourself. Perfect for date nights, bachelorette parties, and travelers who want a deeply personal souvenir. Call (719) 530-3032.
 
 ## Shopping Tips
 
-- Visit during the **ArtWalk** (June–September first weekends) for studio-open events where you can meet the maker
+- Visit during the **ArtWalk** (June–September first weekends) for studio-open events where you can meet the makers
 - Custom work typically takes 4–8 weeks; plan ahead if you want something made to order
 - Browse our [jewelry & artisan listings](/directory?category=jewelry-artisan) for the full directory
 
 A piece of Salida jewelry is more than a souvenir — it's a Colorado heirloom.`,
       metaDescription:
-        "Discover Salida, Colorado's handcrafted jewelry makers — Colorado sapphires, turquoise, and sterling silver pieces made in the heart of the Sawatch Range.",
+        "Discover Salida, Colorado's handcrafted jewelry makers — Colorado sapphires, turquoise, and custom-made pieces at Krivanek Jewelers and Riveting Experience Jewelry.",
       tags: ['salida jewelry', 'colorado sapphires', 'handcrafted jewelry', 'artisan jewelry', 'salida colorado'],
       isPublished: true,
       publishedAt: new Date('2024-09-01'),
@@ -735,7 +929,7 @@ A piece of Salida jewelry is more than a souvenir — it's a Colorado heirloom.`
       slug: 'salida-to-royal-gorge-day-trip',
       title: 'Shopping + Adventure: The Perfect Salida to Royal Gorge Day Trip',
       excerpt:
-        'Start your morning browsing Salida\'s galleries and boutiques, then take the scenic 45-minute drive east on US-50 for world-class rafting or ziplines at Royal Gorge — and end with dinner at Whitewater Bar & Grill in Canon City.',
+        "Start your morning browsing Salida's galleries and boutiques, then take the scenic 45-minute drive east on US-50 for world-class rafting or ziplines at Royal Gorge — and end with dinner at Whitewater Bar & Grill in Canon City.",
       content: `# Shopping + Adventure: The Perfect Salida to Royal Gorge Day Trip
 
 This is Colorado at its best: a morning of art and boutique shopping in one of the state's most creative small towns, followed by an afternoon of world-class outdoor adventure at one of its most dramatic natural landmarks — all in a single day.
@@ -754,19 +948,19 @@ Park once and walk. Downtown Salida's F Street and surrounding blocks are the he
 
 ### Where to Start
 
-**Absolute Gallery** (228 F Street) opens at 10 AM and anchors the gallery scene with exceptional contemporary fine art. Two blocks down, **Artyard Gallery** offers a unique outdoor sculpture experience you won't find anywhere else in Colorado.
+**Eye Candy Art and Treasure** (118 N F Street) represents 40+ artists across paintings, sculpture, and artisan jewelry — give yourself 30 to 45 minutes to browse. A block away, **The Maverick Potter** (148 N F Street, (719) 539-5112) offers hand-thrown pottery, blown glass, and handmade jewelry in a working studio setting open since 2008.
 
 ### Shop the Boutiques
 
-**Current Boutique** (115 F Street) carries curated women's apparel — perfect for a Colorado-inspired wardrobe refresh. For something more bohemian, **Wild Bird** (220 F Street) has handmade jewelry, crystals, and free-spirited clothing.
+**Opal Boutique** (128 F Street, (719) 539-2515) carries curated women's apparel — perfect for a Colorado-inspired wardrobe refresh. For something more eclectic, **Drift & Amble** (117 N F Street) has hand-printed apparel, letterpress cards, and Colorado art prints.
 
-If someone in your group is an outdoor enthusiast, **Headwaters Outdoor Equipment** (228 N F Street, (719) 395-4100) stocks everything for the afternoon's adventure — river gear, quick-dry layers, and local beta from staff who actually paddle and climb here.
+If someone in your group is an outdoor enthusiast, **Headwaters Outdoor Equipment** (228 N F Street, (719) 539-4506) stocks everything for the afternoon's adventure — river gear, quick-dry layers, and local beta from staff who actually paddle and climb here.
 
 ### Pick Up Gifts
 
-- **Mountain Made** for Colorado-crafted pottery and photography prints
-- **Salida Soap Company** for handmade natural bath goods — perfect travel gifts
-- **Studio H Jewelry** (212 F Street) for handcrafted fine jewelry made on-site
+- **Blueflower Candies & Provisions** (132 F Street) for fudge, chocolate, and 600+ candy varieties — perfect packable gifts
+- **Dragonfly Gifts** (221 F Street, (719) 539-4448) for crystals, Raku pottery, candles, and artisan finds
+- **Krivanek Jewelers** (101 F Street, (719) 539-7493) for handcrafted fine jewelry made in-studio
 
 ## Lunch in Salida (12 PM – 1 PM)
 
@@ -774,7 +968,7 @@ Downtown Salida has excellent lunch options along F Street and Sackett Avenue. G
 
 ## The Drive: Salida to Canon City (1 PM – 1:45 PM)
 
-Head east on **US-50** — one of Colorado's most scenic highway stretches. You'll follow the Arkansas River through Browns Canyon National Monument, past the town of Salida, through the narrows, and into Cañon City. The drive is 45 minutes and worth slowing down for.
+Head east on **US-50** — one of Colorado's most scenic highway stretches. You'll follow the Arkansas River through Browns Canyon National Monument, past rolling ranch land, through the narrows, and into Cañon City. The drive is 45 minutes and worth slowing down for.
 
 ## Afternoon: Royal Gorge Adventure (2 PM – 5 PM)
 
@@ -810,7 +1004,7 @@ End the day right in downtown Canon City — two outstanding restaurants just mi
 
 ### Whitewater Bar & Grill
 **(719) 269-1009 | whitewaterbar.com**
-Open seasonally April 17 through October 31. Classic Colorado bar and grill with great burgers, local beers, and a deck perfect for reliving the day's adventures. Arrives early — it fills up on summer evenings.
+Open seasonally April 17 through October 31. Classic Colorado bar and grill with great burgers, local beers, and a deck perfect for reliving the day's adventures. Arrive early — it fills up on summer evenings.
 
 ### Whitewater Rooftop Social
 **(719) 451-7241 | wwrooftopsocial.com**
@@ -818,7 +1012,7 @@ Open year-round. Rooftop dining and cocktails with views of Canon City's skyline
 
 ## The Full Itinerary at a Glance
 
-- **9 AM** — Arrive in Salida, park downtown, start at Absolute Gallery
+- **9 AM** — Arrive in Salida, park downtown, start at Eye Candy Art and Treasure
 - **9–12 PM** — Gallery hop, boutique shopping, pick up gifts on F Street
 - **12 PM** — Lunch in Salida
 - **1 PM** — Depart east on US-50 (45-minute scenic drive)
@@ -828,7 +1022,7 @@ Open year-round. Rooftop dining and cocktails with views of Canon City's skyline
 
 **Browse the [Salida Shopping Directory](/directory) to plan your morning stops.**`,
       metaDescription:
-        'The perfect Colorado day trip: morning shopping in Salida\'s Creative District, then a 45-minute drive east to world-class rafting and ziplines at Royal Gorge. Includes driving directions from Denver and Colorado Springs.',
+        "The perfect Colorado day trip: morning shopping in Salida's Creative District, then a 45-minute drive east to world-class rafting and ziplines at Royal Gorge. Driving directions from Denver (2 hrs) and Colorado Springs (1 hr 45 min).",
       tags: ['salida day trip', 'royal gorge', 'salida shopping', 'colorado itinerary', 'arkansas river rafting', 'royal gorge zipline'],
       isPublished: true,
       publishedAt: new Date('2024-10-01'),
@@ -857,41 +1051,40 @@ Two days. One of Colorado's most creative small towns. One of its most dramatic 
 
 ### Morning: Gallery Row on F Street (9 AM – 12 PM)
 
-Start at **Absolute Gallery** (228 F Street, (719) 539-7810) — Salida's anchor gallery for contemporary fine art. Give yourself 30–45 minutes; the rotating exhibitions are worth it.
+Start at **Eye Candy Art and Treasure** (118 N F Street) — 40+ artists, fine artisan jewelry, paintings, and sculpture in a beautiful downtown gallery. Give yourself 30–45 minutes; the rotating exhibitions are worth it.
 
-From there, work your way down F Street:
+From there, work your way through the Creative District:
 
-- **The Decker Gallery** (218 F Street) — Original Colorado landscape paintings; the Collegiate Peaks and Arkansas River canyon are recurring subjects. Stunning plein air work.
-- **The Green Spot Gallery** (120 F Street) — A collective of Salida artists: ceramics, textiles, jewelry, and contemporary work. Great for affordable originals.
-- **Spirit of the Rockies Gallery** (131 F Street) — Western and wildlife art, bronze sculpture, and paintings celebrating the American West.
-
-For the full sculptural experience, drive 3 minutes west to **Artyard Gallery** (9140 W Highway 50) — an outdoor sculpture garden and working studios unlike anything else in Colorado.
+- **The Maverick Potter** (148 N F Street, (719) 539-5112) — Hand-thrown pottery, blown glass, and handmade jewelry from 20+ artists in a working studio. Mark Rittmann has been making pots here since 2008.
+- **Four Winds Gallery** (118 F Street, (719) 539-7459) — Owner Linda Frances has curated this welcoming gallery since 2005: oil paintings, mixed media, Colorado pottery, and nature photography.
+- **Brodeur Studio Gallery** (133 E Second Street) — Colorful abstract and impressionistic paintings by international artist Paulette Brodeur, celebrating the Colorado landscape since 1994.
+- **Bork and Watkins Gallery** (149 W 1st Street) — A charming husband-and-wife gallery featuring Carl Bork's landscape paintings alongside Karen Watkins's whimsical felted sculptures.
 
 ### Lunch Break (12 PM – 1 PM)
 
-Refuel downtown before the afternoon boutique circuit.
+Refuel downtown before the afternoon boutique circuit. Salida's F Street and Sackett Avenue have excellent lunch spots.
 
 ### Afternoon: Boutiques & Artisan Shopping (1 PM – 5 PM)
 
-**Current Boutique** (115 F Street) is the go-to for curated women's apparel — thoughtfully selected pieces that work for mountain-town life and city life alike.
+**Opal Boutique** (128 F Street, (719) 539-2515) is the go-to for curated women's apparel — thoughtfully selected pieces that work for mountain-town life and city life alike.
 
-**Wild Bird** (220 F Street) is pure Salida spirit: bohemian clothing, handmade jewelry, crystals, candles, and lifestyle goods for the free-spirited traveler.
+**Drift & Amble** (117 N F Street) is pure Salida spirit: hand-printed apparel, letterpress cards, handmade jewelry, and Colorado art prints made with real creative intention.
 
-For gifts, **Mountain Made** has the best selection of Colorado-made souvenirs — locally crafted pottery, photography prints, artisan food products, and more.
+For gifts, **Blueflower Candies & Provisions** (132 F Street) has the best selection of fudge, chocolates, and 600+ candy varieties — beautifully packaged and perfect for taking home.
 
-**Studio H Jewelry** (212 F Street) deserves dedicated time. These are handcrafted fine jewelry pieces made in-studio using sterling silver, 14k gold, and locally sourced gemstones. Custom commissions welcome. Even if you're not buying, the craftsmanship is worth seeing.
+**Krivanek Jewelers** (101 F Street, (719) 539-7493) deserves dedicated time. Custom-designed fine jewelry featuring Colorado sapphires, turquoise, and rare gemstones — made in-studio by expert craftspeople. Open Tue–Sat, 10 AM to 5 PM.
 
-**Salida Soap Company** stocks handmade natural soaps scented with Colorado botanicals — some of the best packable gifts you'll find anywhere.
+**Dragonfly Gifts** (221 F Street, (719) 539-4448) stocks crystals, Raku pottery, Himalayan salt lamps, artisan candles, and gemstone jewelry — the kind of shop you'll browse longer than planned.
 
 ### Late Afternoon: Gear Up for Tomorrow (4 PM – 5 PM)
 
-Stop by **Headwaters Outdoor Equipment** (228 N F Street, (719) 395-4100) if you need anything for tomorrow's adventure — quick-dry layers, river sandals, or just expert local advice on what to expect on the Arkansas.
+Stop by **Headwaters Outdoor Equipment** (228 N F Street, (719) 539-4506) if you need anything for tomorrow's adventure — quick-dry layers, river sandals, or expert local advice on what to expect on the Arkansas.
 
 ### Evening in Salida
 
 Saturday evenings in Salida are lively. If your weekend falls on the **first weekend of June, July, August, or September**, you'll have the **Salida ArtWalk** — galleries open late, artists on-site, street energy throughout the Creative District.
 
-On any Saturday morning, the **Salida Farmers Market** (City Park) runs May–October with fresh produce, artisan crafts, and local food.
+On any Saturday morning, the **Salida Farmers Market** runs at **Alpine Park, 404 E Street** (corner of 5th & E) from June through October — fresh produce, artisan crafts, local food, and live music.
 
 ---
 
@@ -899,7 +1092,7 @@ On any Saturday morning, the **Salida Farmers Market** (City Park) runs May–Oc
 
 ### Morning: Final Salida Stop (9 AM – 10 AM)
 
-Before leaving, hit the **Salida Artisan Market** (Salida Creative District) for handmade pottery, jewelry, textiles, and woodwork from Chaffee County's best makers. Great for any last-minute gifts you didn't find yesterday.
+Before leaving, browse **Salida Books** (109 N F Street, Suite A, (719) 626-1377) for a great trail read or Colorado title to take home — one of the region's best independent bookstores, open Monday and Wednesday through Sunday. Or stop into **Sutty's Downtown Records & Arts** (110 E 1st Street) for a vinyl LP and some fresh contemporary art.
 
 Then grab coffee and head east.
 
@@ -933,7 +1126,7 @@ Canon City's downtown has its own charm — the historic district along Main Str
 ### Dinner Before You Go (5 PM – 7 PM)
 
 **Whitewater Bar & Grill** (Canon City) — **(719) 269-1009 | whitewaterbar.com**
-Open April 17 through October 31. The quintessential post-adventure meal: great burgers, Colorado craft beers, and the kind of atmosphere that comes from a room full of people who just had the best day of their summer. The riverside patio is outstanding.
+Open April 17 through October 31. The quintessential post-adventure meal: great burgers, Colorado craft beers, and the kind of atmosphere that comes from a room full of people who just had the best day of their summer.
 
 **Whitewater Rooftop Social** (Canon City) — **(719) 451-7241 | wwrooftopsocial.com**
 Open year-round. Elevated rooftop dining with cocktails and mountain views. The more upscale option — ideal if you want to celebrate the weekend properly before heading home.
@@ -948,14 +1141,14 @@ Open year-round. Elevated rooftop dining with cocktails and mountain views. The 
 ## Weekend at a Glance
 
 **Saturday**
-- 9 AM: Absolute Gallery → F Street galleries
+- 9 AM: Eye Candy Art and Treasure → F Street galleries (The Maverick Potter, Four Winds, Brodeur, Bork & Watkins)
 - 12 PM: Lunch in Salida
-- 1 PM: Boutiques — Current Boutique, Wild Bird, Studio H Jewelry, Mountain Made
+- 1 PM: Boutiques — Opal Boutique, Drift & Amble, Krivanek Jewelers, Blueflower Candies, Dragonfly Gifts
 - 4 PM: Headwaters Outdoor (gear up for tomorrow)
 - Evening: ArtWalk if first weekend of month (June–September)
 
 **Sunday**
-- 9 AM: Salida Artisan Market
+- 9 AM: Salida Books or Sutty's Downtown Records & Arts
 - 10 AM: Drive east on US-50 (45 minutes)
 - 11 AM: Raft the Royal Gorge (royalgorgerafting.net, (719) 275-7238) or Zipline Tours (royalgorgeziplinetours.com, (719) 275-7238)
 - 2 PM: Explore Canon City
@@ -964,7 +1157,7 @@ Open year-round. Elevated rooftop dining with cocktails and mountain views. The 
 
 **Browse the full [Salida Shopping Directory](/directory) to plan your stops.**`,
       metaDescription:
-        'The ultimate 2-day Colorado weekend: gallery-hopping and boutique shopping in Salida\'s Creative District, then world-class rafting and ziplines at Royal Gorge. Full itinerary with drive times from Denver (2 hrs) and Colorado Springs (1 hr).',
+        "The ultimate 2-day Colorado weekend: gallery-hopping and boutique shopping in Salida's Creative District, then world-class rafting and ziplines at Royal Gorge. Full itinerary with drive times from Denver (2 hrs) and Colorado Springs (1 hr 45 min).",
       tags: ['salida weekend', 'salida shopping itinerary', 'royal gorge weekend', 'colorado weekend getaway', 'salida creative district', 'royal gorge rafting', 'artisan travel'],
       isPublished: true,
       publishedAt: new Date('2024-10-15'),
