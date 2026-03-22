@@ -4,6 +4,7 @@ import { magicLinkTokens, users } from '@/db/schema'
 import { eq, and, gt } from 'drizzle-orm'
 import { createUserSession, setUserSessionCookie } from '@/lib/auth'
 import { createHash } from 'crypto'
+export const dynamic = 'force-dynamic'
 
 interface Props {
   searchParams: Promise<{ token?: string }>
