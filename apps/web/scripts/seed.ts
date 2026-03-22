@@ -619,6 +619,245 @@ A piece of Salida jewelry is more than a souvenir — it's a Colorado heirloom.`
       publishedAt: new Date('2024-09-01'),
       authorName: 'Shop Salida',
     },
+    {
+      slug: 'salida-to-royal-gorge-day-trip',
+      title: 'Shopping + Adventure: The Perfect Salida to Royal Gorge Day Trip',
+      excerpt:
+        'Start your morning browsing Salida\'s galleries and boutiques, then take the scenic 45-minute drive east on US-50 for world-class rafting or ziplines at Royal Gorge — and end with dinner at Whitewater Bar & Grill in Canon City.',
+      content: `# Shopping + Adventure: The Perfect Salida to Royal Gorge Day Trip
+
+This is Colorado at its best: a morning of art and boutique shopping in one of the state's most creative small towns, followed by an afternoon of world-class outdoor adventure at one of its most dramatic natural landmarks — all in a single day.
+
+## Getting Here
+
+**From Colorado Springs (COS):** 1 hour west on US-50 to Canon City, then 45 minutes further west to Salida. Total: approximately 1 hour 45 minutes.
+
+**From Denver (DEN):** 2 hours south and west via I-25 and US-50. Head through Colorado Springs or take the scenic route through South Park on US-285. Total: approximately 2 hours.
+
+**Pro tip:** Start in Salida (further west) and work your way east toward Canon City — you'll end the day near the Royal Gorge and Canon City restaurants without backtracking.
+
+## Morning: Explore Salida's Creative District (9 AM – 12 PM)
+
+Park once and walk. Downtown Salida's F Street and surrounding blocks are the heart of **Colorado's largest Certified Creative District** — over 100 working artists and 50+ arts businesses in a walkable footprint.
+
+### Where to Start
+
+**Absolute Gallery** (228 F Street) opens at 10 AM and anchors the gallery scene with exceptional contemporary fine art. Two blocks down, **Artyard Gallery** offers a unique outdoor sculpture experience you won't find anywhere else in Colorado.
+
+### Shop the Boutiques
+
+**Current Boutique** (115 F Street) carries curated women's apparel — perfect for a Colorado-inspired wardrobe refresh. For something more bohemian, **Wild Bird** (220 F Street) has handmade jewelry, crystals, and free-spirited clothing.
+
+If someone in your group is an outdoor enthusiast, **Headwaters Outdoor Equipment** (228 N F Street, (719) 395-4100) stocks everything for the afternoon's adventure — river gear, quick-dry layers, and local beta from staff who actually paddle and climb here.
+
+### Pick Up Gifts
+
+- **Mountain Made** for Colorado-crafted pottery and photography prints
+- **Salida Soap Company** for handmade natural bath goods — perfect travel gifts
+- **Studio H Jewelry** (212 F Street) for handcrafted fine jewelry made on-site
+
+## Lunch in Salida (12 PM – 1 PM)
+
+Downtown Salida has excellent lunch options along F Street and Sackett Avenue. Grab a meal before the drive — you'll want energy for the afternoon.
+
+## The Drive: Salida to Canon City (1 PM – 1:45 PM)
+
+Head east on **US-50** — one of Colorado's most scenic highway stretches. You'll follow the Arkansas River through Browns Canyon National Monument, past the town of Salida, through the narrows, and into Cañon City. The drive is 45 minutes and worth slowing down for.
+
+## Afternoon: Royal Gorge Adventure (2 PM – 5 PM)
+
+Choose your adventure — or do both if you have the energy.
+
+### Royal Gorge Rafting — Colorado's #1 Whitewater
+**royalgorgerafting.net | (719) 275-7238**
+
+The Royal Gorge section of the Arkansas River is one of the most legendary whitewater runs in North America — Class IV-V rapids through a canyon with 1,000-foot granite walls towering above you. Half-day trips run daily from April through September.
+
+- Half-day trips: depart at 8 AM and 1 PM
+- Full-day trips available
+- All gear provided — no experience necessary for the half-day trip
+- Book in advance; afternoon trips fill up fast in peak season (June–August)
+
+### Royal Gorge Zipline Tours — 1,200 Feet Above the Canyon
+**royalgorgeziplinetours.com | (719) 275-7238**
+
+If you want to see the gorge from above rather than below, the Royal Gorge Zipline Tours run parallel lines over the canyon at up to 1,200 feet above the Arkansas River. The views are extraordinary — arguably the best vantage point in southern Colorado.
+
+- Tours run daily in season; call ahead for current schedule
+- Weight limits apply; check the website before booking
+- Combination raft + zip packages available
+
+### Royal Gorge Vacation Rentals — Stay the Night
+**royalgorgevacationrentals.com | (719) 275-7238**
+
+If the day is so good you don't want it to end, Royal Gorge Vacation Rentals offers Airstreams, yurts, and glamping accommodations near the gorge. Booking a night turns the day trip into the ultimate Colorado weekend.
+
+## Dinner in Canon City (6 PM – 8 PM)
+
+End the day right in downtown Canon City — two outstanding restaurants just minutes from the Royal Gorge.
+
+### Whitewater Bar & Grill
+**(719) 269-1009 | whitewaterbar.com**
+Open seasonally April 17 through October 31. Classic Colorado bar and grill with great burgers, local beers, and a deck perfect for reliving the day's adventures. Arrives early — it fills up on summer evenings.
+
+### Whitewater Rooftop Social
+**(719) 451-7241 | wwrooftopsocial.com**
+Open year-round. Rooftop dining and cocktails with views of Canon City's skyline and the mountains beyond. Elevated food and atmosphere — the perfect cap to a Colorado day.
+
+## The Full Itinerary at a Glance
+
+- **9 AM** — Arrive in Salida, park downtown, start at Absolute Gallery
+- **9–12 PM** — Gallery hop, boutique shopping, pick up gifts on F Street
+- **12 PM** — Lunch in Salida
+- **1 PM** — Depart east on US-50 (45-minute scenic drive)
+- **2 PM** — Arrive Canon City / Royal Gorge
+- **2–5 PM** — Raft the Royal Gorge or fly over it on the ziplines
+- **6 PM** — Dinner at Whitewater Bar & Grill or Rooftop Social in Canon City
+
+**Browse the [Salida Shopping Directory](/directory) to plan your morning stops.**`,
+      metaDescription:
+        'The perfect Colorado day trip: morning shopping in Salida\'s Creative District, then a 45-minute drive east to world-class rafting and ziplines at Royal Gorge. Includes driving directions from Denver and Colorado Springs.',
+      tags: ['salida day trip', 'royal gorge', 'salida shopping', 'colorado itinerary', 'arkansas river rafting', 'royal gorge zipline'],
+      isPublished: true,
+      publishedAt: new Date('2024-10-01'),
+      authorName: 'Shop Salida',
+    },
+    {
+      slug: 'artisan-weekend-salida-royal-gorge',
+      title: 'Artisan Weekend: 2 Days of Salida Shopping & Royal Gorge Adventure',
+      excerpt:
+        'The ultimate Colorado weekend: two days of gallery-hopping, boutique shopping, artisan markets, world-class whitewater, and canyon views. A complete itinerary for the Salida Creative District and Royal Gorge.',
+      content: `# Artisan Weekend: 2 Days of Salida Shopping & Royal Gorge Adventure
+
+Two days. One of Colorado's most creative small towns. One of its most dramatic natural wonders. This is the Colorado weekend itinerary that has everything.
+
+## Getting Here
+
+**From Colorado Springs (COS):** 1 hour west on US-50 to Canon City. From Canon City, continue 45 minutes west to Salida. Total to Salida: approximately 1 hour 45 minutes.
+
+**From Denver (DEN):** 2 hours south and west. Take I-25 south to Colorado Springs, then US-50 west — or take the scenic US-285 route through Fairplay and Poncha Springs. Total: approximately 2 hours.
+
+**Recommended:** Arrive in Salida Friday evening or Saturday morning. Plan to return home Sunday via Canon City — you'll end near the Royal Gorge for your last adventure before heading back.
+
+---
+
+## Day 1: Salida's Creative District
+
+### Morning: Gallery Row on F Street (9 AM – 12 PM)
+
+Start at **Absolute Gallery** (228 F Street, (719) 539-7810) — Salida's anchor gallery for contemporary fine art. Give yourself 30–45 minutes; the rotating exhibitions are worth it.
+
+From there, work your way down F Street:
+
+- **The Decker Gallery** (218 F Street) — Original Colorado landscape paintings; the Collegiate Peaks and Arkansas River canyon are recurring subjects. Stunning plein air work.
+- **The Green Spot Gallery** (120 F Street) — A collective of Salida artists: ceramics, textiles, jewelry, and contemporary work. Great for affordable originals.
+- **Spirit of the Rockies Gallery** (131 F Street) — Western and wildlife art, bronze sculpture, and paintings celebrating the American West.
+
+For the full sculptural experience, drive 3 minutes west to **Artyard Gallery** (9140 W Highway 50) — an outdoor sculpture garden and working studios unlike anything else in Colorado.
+
+### Lunch Break (12 PM – 1 PM)
+
+Refuel downtown before the afternoon boutique circuit.
+
+### Afternoon: Boutiques & Artisan Shopping (1 PM – 5 PM)
+
+**Current Boutique** (115 F Street) is the go-to for curated women's apparel — thoughtfully selected pieces that work for mountain-town life and city life alike.
+
+**Wild Bird** (220 F Street) is pure Salida spirit: bohemian clothing, handmade jewelry, crystals, candles, and lifestyle goods for the free-spirited traveler.
+
+For gifts, **Mountain Made** has the best selection of Colorado-made souvenirs — locally crafted pottery, photography prints, artisan food products, and more.
+
+**Studio H Jewelry** (212 F Street) deserves dedicated time. These are handcrafted fine jewelry pieces made in-studio using sterling silver, 14k gold, and locally sourced gemstones. Custom commissions welcome. Even if you're not buying, the craftsmanship is worth seeing.
+
+**Salida Soap Company** stocks handmade natural soaps scented with Colorado botanicals — some of the best packable gifts you'll find anywhere.
+
+### Late Afternoon: Gear Up for Tomorrow (4 PM – 5 PM)
+
+Stop by **Headwaters Outdoor Equipment** (228 N F Street, (719) 395-4100) if you need anything for tomorrow's adventure — quick-dry layers, river sandals, or just expert local advice on what to expect on the Arkansas.
+
+### Evening in Salida
+
+Saturday evenings in Salida are lively. If your weekend falls on the **first weekend of June, July, August, or September**, you'll have the **Salida ArtWalk** — galleries open late, artists on-site, street energy throughout the Creative District.
+
+On any Saturday morning, the **Salida Farmers Market** (City Park) runs May–October with fresh produce, artisan crafts, and local food.
+
+---
+
+## Day 2: Royal Gorge Adventure
+
+### Morning: Final Salida Stop (9 AM – 10 AM)
+
+Before leaving, hit the **Salida Artisan Market** (Salida Creative District) for handmade pottery, jewelry, textiles, and woodwork from Chaffee County's best makers. Great for any last-minute gifts you didn't find yesterday.
+
+Then grab coffee and head east.
+
+### The Drive: Salida to Canon City (10 AM – 10:45 AM)
+
+Take **US-50 east** — follow the Arkansas River through Browns Canyon National Monument. This is 45 minutes of genuinely beautiful Colorado scenery: river canyon, granite walls, cottonwood groves, and the occasional eagle overhead.
+
+### Morning: Raft the Royal Gorge (11 AM – 2 PM)
+
+**Royal Gorge Rafting | royalgorgerafting.net | (719) 275-7238**
+
+The Royal Gorge section of the Arkansas River is Colorado's most iconic whitewater run — 10 miles of Class IV-V rapids between walls that rise 1,000 feet above you. Half-day trips depart at 8 AM and 1 PM; full-day options are available.
+
+- Book in advance (online at royalgorgerafting.net or call (719) 275-7238)
+- All gear provided; no prior experience required for the half-day standard trip
+- Wetsuits provided in spring when snowmelt water is cold
+- Peak season (June–August) books out weeks in advance
+
+### OR: Royal Gorge Zipline Tours (11 AM – 1 PM)
+
+**royalgorgeziplinetours.com | (719) 275-7238**
+
+For the aerial perspective: the Royal Gorge Zipline Tours send you flying over the canyon at up to 1,200 feet above the Arkansas River. If heights are your thing, this is an absolutely unforgettable experience — the views of the gorge walls and suspension bridge from the ziplines are extraordinary.
+
+Call (719) 275-7238 to check daily schedule and availability.
+
+### Afternoon: Explore Canon City (2 PM – 5 PM)
+
+Canon City's downtown has its own charm — the historic district along Main Street has excellent independent shops, coffee, and more before you start the drive home.
+
+### Dinner Before You Go (5 PM – 7 PM)
+
+**Whitewater Bar & Grill** (Canon City) — **(719) 269-1009 | whitewaterbar.com**
+Open April 17 through October 31. The quintessential post-adventure meal: great burgers, Colorado craft beers, and the kind of atmosphere that comes from a room full of people who just had the best day of their summer. The riverside patio is outstanding.
+
+**Whitewater Rooftop Social** (Canon City) — **(719) 451-7241 | wwrooftopsocial.com**
+Open year-round. Elevated rooftop dining with cocktails and mountain views. The more upscale option — ideal if you want to celebrate the weekend properly before heading home.
+
+### The Drive Home (7 PM)
+
+**To Colorado Springs (COS area):** Head east on US-50 — 1 hour back to Colorado Springs.
+**To Denver (DEN area):** East on US-50 to Colorado Springs, then north on I-25 — approximately 2 hours total.
+
+---
+
+## Weekend at a Glance
+
+**Saturday**
+- 9 AM: Absolute Gallery → F Street galleries
+- 12 PM: Lunch in Salida
+- 1 PM: Boutiques — Current Boutique, Wild Bird, Studio H Jewelry, Mountain Made
+- 4 PM: Headwaters Outdoor (gear up for tomorrow)
+- Evening: ArtWalk if first weekend of month (June–September)
+
+**Sunday**
+- 9 AM: Salida Artisan Market
+- 10 AM: Drive east on US-50 (45 minutes)
+- 11 AM: Raft the Royal Gorge (royalgorgerafting.net, (719) 275-7238) or Zipline Tours (royalgorgeziplinetours.com, (719) 275-7238)
+- 2 PM: Explore Canon City
+- 5 PM: Dinner at Whitewater Bar & Grill ((719) 269-1009) or Rooftop Social ((719) 451-7241)
+- 7 PM: Drive home
+
+**Browse the full [Salida Shopping Directory](/directory) to plan your stops.**`,
+      metaDescription:
+        'The ultimate 2-day Colorado weekend: gallery-hopping and boutique shopping in Salida\'s Creative District, then world-class rafting and ziplines at Royal Gorge. Full itinerary with drive times from Denver (2 hrs) and Colorado Springs (1 hr).',
+      tags: ['salida weekend', 'salida shopping itinerary', 'royal gorge weekend', 'colorado weekend getaway', 'salida creative district', 'royal gorge rafting', 'artisan travel'],
+      isPublished: true,
+      publishedAt: new Date('2024-10-15'),
+      authorName: 'Shop Salida',
+    },
   ]
 
   let postsInserted = 0

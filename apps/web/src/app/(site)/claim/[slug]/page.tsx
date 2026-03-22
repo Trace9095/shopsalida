@@ -39,7 +39,7 @@ export default function ClaimPage() {
 
   const [shop, setShop] = useState<{ name: string; category: string; address: string } | null>(null)
   const [loading, setLoading] = useState(true)
-  const [tier, setTier] = useState<'free' | 'premium' | 'sponsored'>('premium')
+  const [tier, setTier] = useState<'premium' | 'sponsored'>('premium')
   const [form, setForm] = useState({ name: '', email: '', phone: '', business: '', message: '' })
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState(false)
@@ -64,26 +64,14 @@ export default function ClaimPage() {
     setSubmitting(true)
     setError('')
     try {
-      if (tier === 'free') {
-        // Submit free claim request
-        const res = await fetch('/api/claims', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ slug, ...form }),
-        })
-        if (!res.ok) throw new Error((await res.json()).error ?? 'Failed to submit')
-        setDone(true)
-      } else {
-        // Start Stripe checkout for paid tiers
-        const res = await fetch('/api/checkout', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ tier, slug, email: form.email }),
-        })
-        if (!res.ok) throw new Error((await res.json()).error ?? 'Failed to start checkout')
-        const { url } = await res.json()
-        if (url) window.location.href = url
-      }
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tier, slug, email: form.email }),
+      })
+      if (!res.ok) throw new Error((await res.json()).error ?? 'Failed to start checkout')
+      const { url } = await res.json()
+      if (url) window.location.href = url
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
     } finally {
@@ -151,25 +139,7 @@ export default function ClaimPage() {
       </div>
 
       {/* Tier selector */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
-        {/* Free tier */}
-        <button
-          onClick={() => setTier('free')}
-          className={`rounded-xl border p-4 text-left transition-all ${
-            tier === 'free'
-              ? 'border-violet bg-violet/5 ring-1 ring-violet/30'
-              : 'border-border bg-surface hover:border-violet/30'
-          }`}
-        >
-          <p className="font-semibold text-foreground mb-1">Basic (Free)</p>
-          <p className="text-2xl font-bold text-foreground mb-2">$0<span className="text-sm text-muted font-normal">/mo</span></p>
-          <ul className="text-xs text-muted space-y-1">
-            <li>Basic business profile</li>
-            <li>Name, address, category</li>
-            <li>Standard directory placement</li>
-          </ul>
-        </button>
-
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
         {TIERS.map((t) => (
           <button
             key={t.id}
@@ -278,8 +248,6 @@ export default function ClaimPage() {
         >
           {submitting ? (
             <><Loader className="w-4 h-4 animate-spin" /> Processing...</>
-          ) : tier === 'free' ? (
-            'Submit Claim Request'
           ) : (
             <>
               <Crown className="w-4 h-4" />
@@ -289,9 +257,7 @@ export default function ClaimPage() {
         </button>
 
         <p className="text-xs text-muted text-center">
-          {tier === 'free'
-            ? 'Our team reviews all claims within 1-2 business days.'
-            : 'Secure checkout via Stripe. Cancel anytime.'}
+          Secure checkout via Stripe. Month-to-month, cancel anytime.
         </p>
       </form>
     </div>

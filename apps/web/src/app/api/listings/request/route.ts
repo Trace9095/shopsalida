@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
       address: address?.trim() ?? '',
       website: website?.trim() ?? '',
       category,
-      tier: tier ?? 'free',
+      tier: tier ?? 'premium',
       message: message?.trim() ?? '',
     })
 
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
       await resend.emails.send({
         from: 'Shop Salida <hello@shopsalida.com>',
         to: process.env.RESEND_CEO_EMAIL,
-        subject: `New listing request: ${businessName} (${tier ?? 'free'})`,
+        subject: `New listing request: ${businessName} (${tier ?? 'premium'})`,
         html: `
           <p><strong>Business:</strong> ${businessName}</p>
           <p><strong>Owner:</strong> ${ownerName ?? 'N/A'}</p>

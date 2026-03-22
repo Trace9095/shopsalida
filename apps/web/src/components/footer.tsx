@@ -97,6 +97,7 @@ export function Footer() {
           <div className="flex items-center gap-4 text-xs text-muted">
             <Link href="/privacy" className="hover:text-gold transition-colors min-h-[44px] flex items-center">Privacy</Link>
             <Link href="/terms" className="hover:text-gold transition-colors min-h-[44px] flex items-center">Terms</Link>
+            <Link href="/manage" className="hover:text-gold transition-colors min-h-[44px] flex items-center">Manage Listing</Link>
             <Link href="/admin" className="hover:text-gold transition-colors min-h-[44px] flex items-center">Admin</Link>
           </div>
         </div>

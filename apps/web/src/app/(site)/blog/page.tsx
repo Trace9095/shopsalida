@@ -67,7 +67,7 @@ export default async function BlogPage() {
       {/* Cross-link */}
       <div className="mt-16 rounded-xl bg-surface border border-border p-6 text-center">
         <p className="text-muted text-sm mb-2">After shopping in Salida, take the scenic drive east.</p>
-        <p className="text-foreground font-semibold mb-4">Royal Gorge is just 1 hour from downtown Salida.</p>
+        <p className="text-foreground font-semibold mb-4">Royal Gorge is just 45 minutes east of downtown Salida on US-50.</p>
         <div className="flex flex-wrap justify-center gap-4 text-sm">
           <a href="https://royalgorgerafting.net" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold-light transition-colors min-h-[44px] flex items-center">
             Royal Gorge Rafting →
