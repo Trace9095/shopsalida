@@ -7,6 +7,7 @@ import { db } from '@/lib/db'
 import { blogPosts } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 import { ArrowLeft, Calendar, ExternalLink } from 'lucide-react'
+import { DayTripPartners } from '@/components/day-trip-partners'
 
 const APP_URL = process.env['NEXT_PUBLIC_APP_URL'] ?? 'https://shopsalida.com'
 
@@ -59,15 +60,7 @@ export default async function BlogPostPage({ params }: Props) {
         </div>
         <div dangerouslySetInnerHTML={{ __html: html }} />
       </article>
-      <div className="mt-16 rounded-xl bg-surface border border-border p-6">
-        <p className="text-gold text-xs font-semibold uppercase tracking-wider mb-2">Extend Your Colorado Trip</p>
-        <p className="text-foreground font-semibold text-lg mb-2">After shopping in Salida, head east on US-50 to Royal Gorge — just 45 minutes away.</p>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm mt-3">
-          <a href="https://royalgorgerafting.net" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-gold hover:text-gold-light transition-colors min-h-[44px]"><ExternalLink className="w-3 h-3" /> Royal Gorge Rafting</a>
-          <a href="https://royalgorgeziplinetours.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-gold hover:text-gold-light transition-colors min-h-[44px]"><ExternalLink className="w-3 h-3" /> Zipline Tours</a>
-          <a href="https://wwrooftopsocial.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-gold hover:text-gold-light transition-colors min-h-[44px]"><ExternalLink className="w-3 h-3" /> Rooftop Social</a>
-        </div>
-      </div>
+      <DayTripPartners />
       <div className="mt-8 text-center">
         <Link href="/directory" className="inline-flex items-center gap-2 px-5 min-h-[44px] rounded-lg bg-gold text-background text-sm font-semibold hover:bg-gold-light transition-colors">Browse the Directory</Link>
       </div>

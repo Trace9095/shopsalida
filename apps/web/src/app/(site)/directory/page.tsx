@@ -6,6 +6,7 @@ import { db } from '@/lib/db'
 import { shops } from '@/db/schema'
 import { eq, and, ilike, or, desc } from 'drizzle-orm'
 import { ShopCard } from '@/components/shop-card'
+import { DayTripPartners } from '@/components/day-trip-partners'
 import { Search, SlidersHorizontal } from 'lucide-react'
 
 const CATEGORY_OPTIONS = [
@@ -128,6 +129,8 @@ export default async function DirectoryPage({ searchParams }: Props) {
           View Listing Plans
         </Link>
       </div>
+
+      <DayTripPartners />
     </div>
   )
 }

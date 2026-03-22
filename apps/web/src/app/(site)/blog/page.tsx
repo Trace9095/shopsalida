@@ -6,6 +6,7 @@ import { db } from '@/lib/db'
 import { blogPosts } from '@/db/schema'
 import { eq, desc } from 'drizzle-orm'
 import { Calendar, ArrowRight } from 'lucide-react'
+import { DayTripPartners } from '@/components/day-trip-partners'
 
 export const metadata: Metadata = {
   title: 'Salida Shopping Guide — Articles & Tips',
@@ -64,22 +65,7 @@ export default async function BlogPage() {
         </p>
       )}
 
-      {/* Cross-link */}
-      <div className="mt-16 rounded-xl bg-surface border border-border p-6 text-center">
-        <p className="text-muted text-sm mb-2">After shopping in Salida, take the scenic drive east.</p>
-        <p className="text-foreground font-semibold mb-4">Royal Gorge is just 45 minutes east of downtown Salida on US-50.</p>
-        <div className="flex flex-wrap justify-center gap-4 text-sm">
-          <a href="https://royalgorgerafting.net" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold-light transition-colors min-h-[44px] flex items-center">
-            Royal Gorge Rafting →
-          </a>
-          <a href="https://royalgorgeziplinetours.com" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold-light transition-colors min-h-[44px] flex items-center">
-            Zipline Tours →
-          </a>
-          <a href="https://epicadventures.co" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold-light transition-colors min-h-[44px] flex items-center">
-            Epic Adventures →
-          </a>
-        </div>
-      </div>
+      <DayTripPartners />
     </div>
   )
 }
