@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
   "buildCommand": "turbo run build --filter=@shopsalida/web",
-  "outputDirectory": "apps/web/.next",
+  "outputDirectory": ".next",
   "devCommand": "cd apps/web && npx next dev --port $PORT"
 }
