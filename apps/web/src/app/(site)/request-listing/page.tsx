@@ -3,6 +3,7 @@
 import type { Metadata } from 'next'
 import { useState } from 'react'
 import { CheckCircle, Send, Loader } from 'lucide-react'
+import { trackEvent } from '@/lib/analytics'
 
 const CATEGORIES = [
   'art-gallery', 'boutique', 'outdoor-gear', 'vintage-antique',
@@ -45,6 +46,7 @@ export default function RequestListingPage() {
         const json = await res.json()
         throw new Error(json.error ?? 'Submission failed')
       }
+      trackEvent('claim_listing', { tier: String(data.desiredTier ?? 'premium'), city: 'Salida' })
       setSubmitted(true)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong')

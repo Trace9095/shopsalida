@@ -11,6 +11,7 @@ import { ClaimBanner } from '@/components/claim-banner'
 import { HoursDisplay } from '@/components/hours-display'
 import { LocalBusinessJsonLd } from '@/components/json-ld'
 import { DayTripPartners } from '@/components/day-trip-partners'
+import { BookingButton } from '@/components/BookingButton'
 
 const APP_URL = process.env['NEXT_PUBLIC_APP_URL'] ?? 'https://shopsalida.com'
 
@@ -262,15 +263,14 @@ export default async function ShopPage({ params }: Props) {
                 </a>
               )}
               {shop.bookingUrl && (
-                <a
+                <BookingButton
                   href={shop.bookingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  businessName={shop.name}
                   className="flex items-center gap-2 px-4 min-h-[44px] rounded-md bg-gold text-background text-sm font-semibold hover:bg-gold-light transition-colors w-full justify-center"
                 >
                   <Calendar className="w-4 h-4" />
                   Book / Reserve
-                </a>
+                </BookingButton>
               )}
             </div>
 
