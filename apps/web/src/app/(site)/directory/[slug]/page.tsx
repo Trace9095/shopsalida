@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { Globe, Phone, MapPin, Instagram, ExternalLink, Calendar, ArrowLeft } from 'lucide-react'
+import { Globe, Phone, MapPin, Instagram, ExternalLink, Calendar, ArrowLeft, Star } from 'lucide-react'
 import { db } from '@/lib/db'
 import { shops, shopImages, shopHours, reviews } from '@/db/schema'
 import { eq, and } from 'drizzle-orm'
@@ -185,12 +185,10 @@ export default async function ShopPage({ params }: Props) {
                         <p className="font-medium text-sm text-foreground">{review.authorName}</p>
                         <div className="flex gap-0.5">
                           {Array.from({ length: 5 }).map((_, i) => (
-                            <span
+                            <Star
                               key={i}
-                              className={i < review.rating ? 'text-gold' : 'text-border'}
-                            >
-                              ★
-                            </span>
+                              className={`w-3.5 h-3.5 ${i < review.rating ? 'text-gold fill-gold' : 'text-border'}`}
+                            />
                           ))}
                         </div>
                       </div>
@@ -311,22 +309,75 @@ export default async function ShopPage({ params }: Props) {
           </div>
         </div>
 
-        {/* Sister Sites Cross-link */}
-        <div className="mt-16 rounded-xl bg-surface border border-border p-6">
-          <p className="text-muted text-xs uppercase tracking-wider font-semibold mb-2">Explore More of Colorado</p>
-          <p className="text-foreground font-semibold mb-3">
-            After shopping in Salida, take the scenic drive to Royal Gorge — just 1 hour east.
-          </p>
-          <div className="flex flex-wrap gap-3 text-sm">
-            <a href="https://royalgorgerafting.net" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold-light transition-colors min-h-[44px] flex items-center gap-1">
-              Royal Gorge Rafting <ExternalLink className="w-3 h-3" />
-            </a>
-            <a href="https://royalgorgeziplinetours.com" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold-light transition-colors min-h-[44px] flex items-center gap-1">
-              Royal Gorge Zipline <ExternalLink className="w-3 h-3" />
-            </a>
-            <a href="https://royalgorgevacationrentals.com" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold-light transition-colors min-h-[44px] flex items-center gap-1">
-              Royal Gorge Vacation Rentals <ExternalLink className="w-3 h-3" />
-            </a>
+        {/* Day Trip from Salida — Partner Section */}
+        <div className="mt-16 rounded-xl bg-surface border border-border overflow-hidden">
+          <div className="px-6 pt-6 pb-4 border-b border-border">
+            <p className="text-gold text-xs font-semibold uppercase tracking-wider mb-1">Featured Partners</p>
+            <p className="text-foreground text-lg font-bold">Day Trip from Salida</p>
+            <p className="text-muted text-sm mt-1">
+              Take the scenic drive east on US-50 to the Royal Gorge — world-class rafting, ziplines, and glamping just 45 minutes away.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border">
+            {[
+              {
+                name: 'Royal Gorge Rafting',
+                tagline: "Colorado's #1 Whitewater",
+                phone: '(719) 275-7238',
+                href: 'https://royalgorgerafting.net',
+              },
+              {
+                name: 'Royal Gorge Zipline',
+                tagline: '1,200 Ft Above the Gorge',
+                phone: '(719) 275-7238',
+                href: 'https://royalgorgeziplinetours.com',
+              },
+              {
+                name: 'RG Vacation Rentals',
+                tagline: 'Airstreams & Yurts',
+                phone: '(719) 275-7238',
+                href: 'https://royalgorgevacationrentals.com',
+              },
+            ].map((partner) => (
+              <div key={partner.name} className="p-5 flex flex-col gap-3">
+                <div>
+                  <p className="text-foreground font-semibold text-sm">{partner.name}</p>
+                  <p className="text-muted text-xs mt-0.5">{partner.tagline}</p>
+                </div>
+                <div className="flex gap-2 mt-auto">
+                  <a
+                    href={partner.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 flex items-center justify-center gap-1.5 min-h-[44px] rounded-lg bg-gold text-background text-xs font-semibold hover:bg-gold-light transition-colors"
+                  >
+                    <Calendar className="w-3.5 h-3.5" />
+                    Book Now
+                  </a>
+                  <a
+                    href={`tel:${partner.phone.replace(/[^0-9]/g, '')}`}
+                    className="flex items-center justify-center gap-1 px-3 min-h-[44px] rounded-lg border border-border text-muted hover:text-foreground hover:border-gold/40 transition-colors text-xs"
+                  >
+                    <Phone className="w-3.5 h-3.5 shrink-0" />
+                    {partner.phone}
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="px-6 py-4 border-t border-border flex flex-col sm:flex-row items-center gap-3">
+            <div className="flex-1">
+              <p className="text-foreground text-sm font-medium">Canon City dining after the adventure</p>
+              <p className="text-muted text-xs">Whitewater Bar &amp; Grill (719) 269-1009 &bull; Whitewater Rooftop Social (719) 451-7241</p>
+            </div>
+            <div className="flex gap-2 shrink-0">
+              <a href="https://whitewaterbar.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-3 min-h-[44px] rounded-lg border border-border text-muted hover:text-gold hover:border-gold/40 text-xs transition-colors">
+                WWBG <ExternalLink className="w-3 h-3" />
+              </a>
+              <a href="https://wwrooftopsocial.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 px-3 min-h-[44px] rounded-lg border border-border text-muted hover:text-gold hover:border-gold/40 text-xs transition-colors">
+                Rooftop Social <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
           </div>
         </div>
       </div>
