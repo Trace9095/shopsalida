@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1c0a00"/>
+      <stop offset="100%" style="stop-color:#7c2d12"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="400" fill="url(#g)"/>
+  <rect width="800" height="400" fill="#c2410c" fill-opacity="0.08"/>
+  <!-- Home icon -->
+  <g transform="translate(336, 152)" stroke="#fdba74" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </g>
+  <text x="400" y="230" font-family="system-ui,sans-serif" font-size="15" fill="#fdba74" fill-opacity="0.7" text-anchor="middle" letter-spacing="3">HOME &amp; DECOR</text>
+</svg>

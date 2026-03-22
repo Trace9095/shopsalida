@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { MapPin, Phone, Globe, Star, BadgeCheck } from 'lucide-react'
+import { MapPin, Phone, Globe, BadgeCheck } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import type { Shop } from '@/db/schema'
 
@@ -14,6 +14,20 @@ const CATEGORY_LABELS: Record<string, string> = {
   'home-decor': 'Home & Decor',
   'food-specialty': 'Food & Specialty',
   'books-music': 'Books & Music',
+}
+
+// Category fallback images — shown when a listing has no heroImageUrl
+const CATEGORY_FALLBACK: Record<string, string> = {
+  'art-gallery':     '/images/categories/art-gallery.svg',
+  boutique:          '/images/categories/boutique.svg',
+  'outdoor-gear':    '/images/categories/outdoor-gear.svg',
+  'vintage-antique': '/images/categories/vintage-antique.svg',
+  'gift-shop':       '/images/categories/gift-shop.svg',
+  'jewelry-artisan': '/images/categories/jewelry-artisan.svg',
+  market:            '/images/categories/market.svg',
+  'home-decor':      '/images/categories/home-decor.svg',
+  'food-specialty':  '/images/categories/food-specialty.svg',
+  'books-music':     '/images/categories/books-music.svg',
 }
 
 const TIER_STYLES = {
@@ -46,21 +60,15 @@ export function ShopCard({ shop, compact = false }: ShopCardProps) {
         tier.ring
       )}
     >
-      {/* Hero image placeholder */}
+      {/* Hero image */}
       {!compact && (
         <div className="relative h-40 rounded-t-lg overflow-hidden bg-surface-hover">
-          {shop.heroImageUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={shop.heroImageUrl}
-              alt={shop.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <MapPin className="w-8 h-8 text-border" />
-            </div>
-          )}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={shop.heroImageUrl ?? CATEGORY_FALLBACK[shop.category] ?? '/images/categories/outdoor-gear.svg'}
+            alt={shop.name}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
           {/* Tier badge */}
           {(tier.badge || isFeaturedPartner) && (
             <div className={cn(

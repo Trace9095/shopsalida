@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1c0a0a"/>
+      <stop offset="100%" style="stop-color:#7f1d1d"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="400" fill="url(#g)"/>
+  <rect width="800" height="400" fill="#be123c" fill-opacity="0.08"/>
+  <!-- ShoppingBag icon -->
+  <g transform="translate(336, 152)" stroke="#fda4af" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+    <line x1="3" y1="6" x2="21" y2="6"/>
+    <path d="M16 10a4 4 0 0 1-8 0"/>
+  </g>
+  <text x="400" y="230" font-family="system-ui,sans-serif" font-size="15" fill="#fda4af" fill-opacity="0.7" text-anchor="middle" letter-spacing="3">BOUTIQUE</text>
+</svg>
