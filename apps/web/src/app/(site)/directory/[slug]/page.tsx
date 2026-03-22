@@ -293,18 +293,18 @@ export default async function ShopPage({ params }: Props) {
               </div>
             )}
 
-            {/* Upgrade prompt for unclaimed free listings */}
-            {!shop.isClaimed && shop.tier === 'free' && (
+            {/* Upgrade prompt for unclaimed listings */}
+            {!shop.isClaimed && (
               <div className="rounded-lg border border-gold/20 bg-gold/5 p-4 text-center">
-                <p className="text-gold text-sm font-semibold mb-1">Upgrade This Listing</p>
+                <p className="text-gold text-sm font-semibold mb-1">Claim & Upgrade This Listing</p>
                 <p className="text-muted text-xs mb-3">
-                  Add photos, hours, booking links, and priority placement.
+                  Add photos, hours, booking links, and priority placement. Listings from $99/mo.
                 </p>
                 <Link
-                  href="/pricing"
+                  href={`/claim/${shop.slug}`}
                   className="inline-flex items-center gap-1 px-4 min-h-[44px] rounded-md bg-gold text-background text-xs font-semibold hover:bg-gold-light transition-colors"
                 >
-                  View Plans from $99/mo
+                  Claim This Listing
                 </Link>
               </div>
             )}

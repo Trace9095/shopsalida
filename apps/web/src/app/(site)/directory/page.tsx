@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { db } from '@/lib/db'
@@ -118,12 +120,12 @@ export default async function DirectoryPage({ searchParams }: Props) {
       {/* Add listing CTA */}
       <div className="mt-16 text-center border border-border rounded-xl p-8 bg-surface">
         <p className="text-foreground font-semibold mb-2">Don&apos;t see your business?</p>
-        <p className="text-muted text-sm mb-4">Submit a free listing and get in front of Salida visitors.</p>
+        <p className="text-muted text-sm mb-4">Get your Salida shop in front of thousands of visitors. Listings start at $99/mo.</p>
         <Link
-          href="/request-listing"
+          href="/pricing"
           className="inline-flex items-center gap-2 px-5 min-h-[44px] rounded-lg bg-gold text-background text-sm font-semibold hover:bg-gold-light transition-colors"
         >
-          Request Free Listing
+          View Listing Plans
         </Link>
       </div>
     </div>

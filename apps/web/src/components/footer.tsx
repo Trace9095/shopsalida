@@ -15,9 +15,8 @@ const LINKS = [
   { href: '/directory', label: 'Full Directory' },
   { href: '/categories', label: 'Browse Categories' },
   { href: '/blog', label: 'Salida Shopping Guide' },
-  { href: '/pricing', label: 'List Your Shop' },
-  { href: '/request-listing', label: 'Request a Listing' },
-  { href: '/add-listing', label: 'Add Your Business' },
+  { href: '/pricing', label: 'Listing Pricing' },
+  { href: '/request-listing', label: 'Get Listed ($99/mo)' },
 ]
 
 export function Footer() {

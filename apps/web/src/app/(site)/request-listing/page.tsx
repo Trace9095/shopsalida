@@ -71,9 +71,9 @@ export default function RequestListingPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-foreground mb-2">Request a Listing</h1>
         <p className="text-muted leading-relaxed">
-          Get your Salida business listed in front of thousands of visitors.
-          Basic listings are <strong className="text-foreground">free</strong>.
-          Premium starts at $99/mo, Sponsored at $199/mo.
+          Get your Salida business in front of thousands of visitors.
+          Premium listings start at <strong className="text-foreground">$99/mo</strong>.
+          Sponsored placement at $199/mo. Month-to-month, cancel anytime.
         </p>
       </div>
 
@@ -200,14 +200,13 @@ export default function RequestListingPage() {
         {/* Desired Tier */}
         <div className="rounded-lg bg-surface border border-border p-5 space-y-3">
           <h2 className="text-foreground font-semibold">Listing Tier</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
-              { value: 'free', label: 'Basic', price: 'Free', desc: 'Name, address, phone' },
               { value: 'premium', label: 'Premium', price: '$99/mo', desc: 'Photos, hours, priority' },
               { value: 'sponsored', label: 'Sponsored', price: '$199/mo', desc: 'Homepage feature' },
             ].map((tier) => (
               <label key={tier.value} className="cursor-pointer">
-                <input type="radio" name="desiredTier" value={tier.value} defaultChecked={tier.value === 'free'} className="sr-only peer" />
+                <input type="radio" name="desiredTier" value={tier.value} defaultChecked={tier.value === 'premium'} className="sr-only peer" />
                 <div className="rounded-lg border border-border p-3 peer-checked:border-gold peer-checked:bg-gold/5 transition-all">
                   <p className="text-foreground font-semibold text-sm">{tier.label}</p>
                   <p className="text-gold text-sm font-medium">{tier.price}</p>
@@ -232,7 +231,7 @@ export default function RequestListingPage() {
           {loading ? (
             <><Loader className="w-4 h-4 animate-spin" /> Submitting...</>
           ) : (
-            <><Send className="w-4 h-4" /> Submit Listing Request</>
+            <><Send className="w-4 h-4" /> Submit for Review</>
           )}
         </button>
       </form>

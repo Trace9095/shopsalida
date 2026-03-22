@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic'
 
 import Link from 'next/link'
-import { MapPin, ArrowRight, Star, Store, Palette, Mountain } from 'lucide-react'
+import { MapPin, ArrowRight, Star, Store, Palette, Mountain, ExternalLink, Phone, Calendar } from 'lucide-react'
 import { db } from '@/lib/db'
 import { shops } from '@/db/schema'
 import { eq, desc, and } from 'drizzle-orm'
@@ -36,6 +36,84 @@ const CATEGORY_HIGHLIGHTS = [
     desc: "Handcrafted Colorado gems",
     icon: Star,
     color: 'text-jewelry',
+  },
+]
+
+const SISTER_BUSINESSES = [
+  {
+    name: 'Royal Gorge Rafting',
+    tagline: "Colorado's #1 Whitewater Adventure",
+    description:
+      'Class III–V Arkansas River whitewater, beginner trips through world-class Royal Gorge. Half-day to full-day trips from Canon City — 45 min from Salida.',
+    phone: '(719) 275-7238',
+    bookingUrl: 'https://royalgorgerafting.net',
+    website: 'https://royalgorgerafting.net',
+    location: 'Canon City, CO — 45 min from Salida',
+    badge: 'Featured Partner',
+    rating: 5,
+    highlight: 'Over 30 years on the Arkansas River',
+    color: 'border-blue-500/30 bg-blue-500/5',
+    badgeColor: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+  },
+  {
+    name: 'Royal Gorge Zipline Tours',
+    tagline: 'Fly Over the Royal Gorge — 1,200 Feet Up',
+    description:
+      'Six thrilling ziplines, two swinging bridges, and jaw-dropping views over the Royal Gorge canyon. Groups and private tours available. Just 45 min east of Salida.',
+    phone: '(719) 275-7238',
+    bookingUrl: 'https://royalgorgeziplinetours.com',
+    website: 'https://royalgorgeziplinetours.com',
+    location: 'Canon City, CO — 45 min from Salida',
+    badge: 'Featured Partner',
+    rating: 5,
+    highlight: 'Most scenic ziplines in Colorado',
+    color: 'border-emerald-500/30 bg-emerald-500/5',
+    badgeColor: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+  },
+  {
+    name: 'Royal Gorge Vacation Rentals',
+    tagline: 'Glamping & Cabins at the Royal Gorge',
+    description:
+      'Airstream trailers, canvas yurts, and rustic cabins nestled along the Arkansas River near the Royal Gorge. The perfect base camp for rafting, zipline, and Salida day trips.',
+    phone: '(719) 275-7238',
+    bookingUrl: 'https://royalgorgevacationrentals.com',
+    website: 'https://royalgorgevacationrentals.com',
+    location: 'Canon City, CO — 45 min from Salida',
+    badge: 'Featured Partner',
+    rating: 5,
+    highlight: 'Riverfront Airstreams & yurts',
+    color: 'border-amber-500/30 bg-amber-500/5',
+    badgeColor: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+  },
+  {
+    name: 'Whitewater Bar & Grill',
+    tagline: 'Seasonal Dining by the Royal Gorge',
+    description:
+      'Open April–October near the Royal Gorge entrance — burgers, craft beer, and Colorado mountain views. The local favorite after a day on the river.',
+    phone: '(719) 269-1009',
+    bookingUrl: 'https://whitewaterbar.com',
+    website: 'https://whitewaterbar.com',
+    location: '45045 Hwy 50 W, near Royal Gorge',
+    badge: 'Featured Partner',
+    rating: 5,
+    highlight: 'Open April – October',
+    color: 'border-orange-500/30 bg-orange-500/5',
+    badgeColor: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+  },
+  {
+    name: 'Whitewater Rooftop Social',
+    tagline: 'Rooftop Bar & Restaurant — Canon City',
+    description:
+      'Craft cocktails, shareable plates, and mountain views from Canon City\'s only rooftop bar. Open year-round at 302 Royal Gorge Blvd — just 45 min east of Salida.',
+    phone: '(719) 451-7241',
+    bookingUrl: 'https://wwrooftopsocial.com',
+    website: 'https://wwrooftopsocial.com',
+    location: '302 Royal Gorge Blvd, Canon City',
+    badge: 'Featured Partner',
+    rating: 5,
+    highlight: 'Only rooftop bar in Canon City',
+    color: 'border-rose-500/30 bg-rose-500/5',
+    badgeColor: 'bg-rose-500/20 text-rose-400 border-rose-500/30',
   },
 ]
 
@@ -212,6 +290,120 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── Day Trip from Salida — Sister Business Section ────────────────── */}
+      <section className="px-4 pb-20">
+        <div className="max-w-6xl mx-auto">
+          {/* Section header */}
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gold/10 border border-gold/20 text-gold text-xs font-medium mb-4">
+              <MapPin className="w-3 h-3" />
+              45 minutes east on US-50
+            </div>
+            <h2 className="text-foreground text-3xl md:text-4xl font-bold mb-3">
+              Day Trip from Salida
+            </h2>
+            <p className="text-muted text-lg max-w-2xl mx-auto leading-relaxed">
+              After exploring downtown Salida, take the scenic drive east along the Arkansas River
+              to the Royal Gorge — one of Colorado&apos;s most spectacular destinations.
+              World-class rafting, ziplines, glamping, and great food await.
+            </p>
+          </div>
+
+          {/* Partner cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+            {SISTER_BUSINESSES.map((biz) => (
+              <div
+                key={biz.name}
+                className={`rounded-xl border p-5 flex flex-col ${biz.color}`}
+              >
+                {/* Badge row */}
+                <div className="flex items-center justify-between mb-4">
+                  <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full border ${biz.badgeColor}`}>
+                    <Star className="w-3 h-3 fill-current" />
+                    {biz.badge}
+                  </span>
+                  {/* 5-star rating */}
+                  <div className="flex gap-0.5">
+                    {Array.from({ length: biz.rating }).map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 text-gold fill-gold" />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Name + tagline */}
+                <h3 className="text-foreground text-lg font-bold mb-1">{biz.name}</h3>
+                <p className="text-gold text-xs font-semibold uppercase tracking-wide mb-3">{biz.tagline}</p>
+
+                {/* Description */}
+                <p className="text-muted text-sm leading-relaxed mb-4 flex-1">{biz.description}</p>
+
+                {/* Highlight pill */}
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-background/40 border border-border text-muted text-xs mb-4">
+                  <Star className="w-3 h-3 text-gold" />
+                  {biz.highlight}
+                </div>
+
+                {/* Location */}
+                <div className="flex items-center gap-1.5 text-muted text-xs mb-4">
+                  <MapPin className="w-3.5 h-3.5 shrink-0" />
+                  {biz.location}
+                </div>
+
+                {/* CTAs */}
+                <div className="flex gap-2">
+                  <a
+                    href={biz.bookingUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 flex items-center justify-center gap-1.5 min-h-[44px] rounded-lg bg-gold text-background text-sm font-semibold hover:bg-gold-light transition-colors"
+                  >
+                    <Calendar className="w-4 h-4" />
+                    Book Now
+                  </a>
+                  <a
+                    href={`tel:${biz.phone.replace(/[^0-9]/g, '')}`}
+                    className="flex items-center justify-center gap-1.5 px-3 min-h-[44px] rounded-lg border border-border text-muted hover:text-foreground hover:border-gold/40 transition-colors"
+                  >
+                    <Phone className="w-4 h-4" />
+                    <span className="text-xs">{biz.phone}</span>
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Banner CTA */}
+          <div className="rounded-xl bg-gradient-to-r from-gold/10 to-surface border border-gold/20 p-6 text-center">
+            <p className="text-foreground font-semibold mb-1">
+              Make it a weekend — shop Salida, then raft the Royal Gorge
+            </p>
+            <p className="text-muted text-sm mb-4">
+              45 minutes east on US Highway 50. The drive alone is worth it.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <a
+                href="https://royalgorgerafting.net"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 min-h-[44px] rounded-lg bg-gold text-background text-sm font-semibold hover:bg-gold-light transition-colors"
+              >
+                Book Royal Gorge Rafting
+                <ExternalLink className="w-4 h-4" />
+              </a>
+              <a
+                href="https://royalgorgeziplinetours.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 min-h-[44px] rounded-lg border border-border text-foreground text-sm font-medium hover:bg-surface transition-colors"
+              >
+                Book Zipline Tours
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── FAQ ──────────────────────────────────────────────────────────── */}
       <section className="px-4 pb-20">
         <div className="max-w-3xl mx-auto">
@@ -230,7 +422,7 @@ export default async function HomePage() {
               },
               {
                 q: "How do I list my business?",
-                a: "Submit your business through the 'Request a Listing' page. Basic listings are free. Premium ($99/mo) and Sponsored ($199/mo) tiers unlock enhanced profiles and priority placement.",
+                a: "Submit your business through the 'Get Listed' page. Premium listings are $99/mo and Sponsored listings are $199/mo — both include full directory placement with photos, hours, and contact details.",
               },
             ].map(({ q, a }) => (
               <div key={q} className="rounded-lg bg-surface border border-border p-5">
@@ -248,14 +440,14 @@ export default async function HomePage() {
           <h2 className="text-foreground text-2xl font-bold mb-3">Own a Salida business?</h2>
           <p className="text-muted mb-6 leading-relaxed">
             Get your shop in front of thousands of visitors and locals exploring downtown Salida.
-            Basic listings are free — premium tiers start at $99/mo.
+            Premium listings start at $99/mo — full profile, photos, and priority placement.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
-              href="/request-listing"
+              href="/request-listing?tier=premium"
               className="inline-flex items-center gap-2 px-6 min-h-[48px] rounded-lg bg-gold text-background font-semibold hover:bg-gold-light transition-colors"
             >
-              Request Free Listing
+              Get Listed for $99/mo
             </Link>
             <Link
               href="/pricing"
