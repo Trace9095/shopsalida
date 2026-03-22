@@ -3,6 +3,8 @@ import { db } from '@/lib/db'
 import { shops, blogPosts } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 
+export const dynamic = 'force-dynamic'
+
 const BASE = 'https://shopsalida.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

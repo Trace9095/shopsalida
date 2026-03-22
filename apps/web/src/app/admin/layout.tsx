@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { requireAdmin } from '@/lib/auth'
 import AdminNav from './admin-nav'
 
+export const dynamic = 'force-dynamic'
 export const metadata = { title: 'Admin — Shop Salida', robots: { index: false } }
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {

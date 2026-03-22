@@ -3,18 +3,12 @@ import { db } from '@/lib/db'
 import { shops } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 
-export const runtime = 'edge'
+export const dynamic = 'force-dynamic'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
 interface Props {
   params: Promise<{ slug: string }>
-}
-
-export async function generateImageMetadata({ params }: Props) {
-  const { slug } = await params
-  const [shop] = await db.select({ name: shops.name }).from(shops).where(eq(shops.slug, slug)).limit(1)
-  return [{ id: slug, alt: shop ? `${shop.name} — Shop Salida` : 'Shop Salida Listing' }]
 }
 
 export default async function OG({ params }: Props) {

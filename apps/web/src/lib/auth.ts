@@ -102,14 +102,10 @@ export async function clearAdminSession(): Promise<void> {
 
 // ─── Require auth guards ──────────────────────────────────────────────────────
 
-export async function requireAdmin(): Promise<AdminSessionPayload> {
-  const session = await getAdminSession()
-  if (!session) throw new Error('Unauthorized')
-  return session
+export async function requireAdmin(): Promise<AdminSessionPayload | null> {
+  return getAdminSession()
 }
 
-export async function requireUser(): Promise<SessionPayload> {
-  const session = await getUserSession()
-  if (!session) throw new Error('Unauthorized')
-  return session
+export async function requireUser(): Promise<SessionPayload | null> {
+  return getUserSession()
 }
