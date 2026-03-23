@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: APP_URL },
   verification: {
-    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+    google: '7jc12-lVG5f_urymoqzGqftRCjj_5iFngU0PSXzXdPI',
   },
 }
 
