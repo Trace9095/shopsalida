@@ -76,3 +76,4 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   )
 }
+// GA4 + GSC v2 - 2026-03-23
