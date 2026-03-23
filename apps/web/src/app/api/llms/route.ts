@@ -23,7 +23,7 @@ export async function GET() {
 Shop Salida features verified businesses across all categories. Premium and Sponsored listings have enhanced profiles. All addresses are in downtown Salida, CO 81201.
 
 ## Monetization
-- Free tier: basic listing (name, address, category)
+- All listings are paid — $99/mo minimum
 - Premium tier ($99/mo): full profile, gallery, hours, analytics
 - Sponsored tier ($199/mo): homepage spotlight, category featured, priority placement
 

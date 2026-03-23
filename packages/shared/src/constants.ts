@@ -93,7 +93,7 @@ export const LISTING_TIERS: Record<
   ListingTier,
   {
     label: string
-    price: number   // cents/month; 0 = free
+    price: number   // cents/month; 0 = unclaimed placeholder
     priceLabel: string
     tagline: string
     badge: string | null
@@ -102,16 +102,14 @@ export const LISTING_TIERS: Record<
   }
 > = {
   free: {
-    label: 'Basic',
+    label: 'Unclaimed',
     price: 0,
-    priceLabel: 'Free',
-    tagline: 'Get found by Salida shoppers',
+    priceLabel: 'Unclaimed',
+    tagline: 'Claim this listing to manage your profile',
     badge: null,
     features: [
-      'Business name, address & category',
-      'Phone & website link',
-      'Basic hours of operation',
-      'Listed in directory search',
+      'Business name & address only',
+      'Upgrade to Premium ($99/mo) for full profile',
     ],
   },
   premium: {

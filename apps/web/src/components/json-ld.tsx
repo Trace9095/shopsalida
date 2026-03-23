@@ -97,7 +97,7 @@ export function FaqJsonLd() {
     },
     {
       q: "How do I list my Salida business on Shop Salida?",
-      a: "Submit your business through our Request a Listing page. Basic listings are free. Premium ($99/mo) and Sponsored ($199/mo) tiers unlock enhanced profiles and priority placement.",
+      a: "Submit your business through our Request a Listing page. Premium listings start at $99/mo and Sponsored listings at $199/mo, with enhanced profiles and priority placement.",
     },
     {
       q: "Is parking available in downtown Salida?",

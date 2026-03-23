@@ -62,7 +62,7 @@ export default function RequestListingPage() {
         <h1 className="text-2xl font-bold text-foreground mb-3">Request Submitted!</h1>
         <p className="text-muted leading-relaxed">
           Thanks! We&apos;ll review your listing and send you a confirmation email within 24 hours.
-          Free listings are live within 1 business day.
+          All listings are reviewed and live within 1 business day.
         </p>
       </div>
     )
