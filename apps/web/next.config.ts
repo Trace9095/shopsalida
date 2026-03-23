@@ -4,7 +4,6 @@ const nextConfig: NextConfig = {
   transpilePackages: ['@shopsalida/shared'],
   images: {
     remotePatterns: [
-      { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'https', hostname: 'res.cloudinary.com' },
       { protocol: 'https', hostname: '**.shopsalida.com' },
     ],
