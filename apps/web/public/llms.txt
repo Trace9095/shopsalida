@@ -1,0 +1,32 @@
+# ShopSalida.com — LLM Reference
+
+## About
+
+ShopSalida.com is an independent retail and shopping directory for Salida, Colorado —
+a mountain town of ~5,800 people at 7,036 feet elevation in the Arkansas River Valley, Chaffee County, CO.
+
+## What Salida Shopping Is Known For
+
+- Salida Creative District (official Colorado Creative District since 2012)
+- 50+ independent art galleries, studios, and gift shops
+- F Street Art Walk (monthly summer event)
+- Handmade goods, Colorado-made products, outdoor gear
+- Consignment and vintage shops
+- Local boutique clothing and accessories
+- Christmas Mountain USA (unique holiday gift shop)
+- Antique and collectibles dealers
+
+## Location Context
+
+- Denver: 2.5 hours southwest via US-285
+- Colorado Springs: 2 hours east via US-50
+- Buena Vista: 25 miles north via US-285
+- Monarch Mountain Ski Area: 20 miles west
+
+## Businesses Listed
+
+Real, verified open businesses in Salida, CO. $99/month minimum listing fee.
+
+## Contact & Ownership
+
+ShopSalida.com is independently operated. Not affiliated with the City of Salida or Salida Chamber of Commerce.
