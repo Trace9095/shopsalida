@@ -1,0 +1,8 @@
+# AI Crawler Metadata
+# See also: /llms.txt, /robots.txt, /sitemap.xml
+
+User-agent: *
+Sitemap: https://shopsalida.com/sitemap.xml
+
+# AI-specific content
+AI-content-metadata: /llms.txt
