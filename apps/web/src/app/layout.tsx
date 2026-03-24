@@ -61,6 +61,14 @@ export const viewport: Viewport = {
   initialScale: 1,
 }
 
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  url: 'https://shopsalida.com',
+  name: 'Shop Salida',
+  description: 'Discover local shops, boutiques, and retail in Salida, Colorado.',
+})
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
@@ -69,22 +77,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <head>
-        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
-              strategy="beforeInteractive"
-            />
-            <Script id="gtag-init" strategy="beforeInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
-              `}
-            </Script>
-          </>
-        )}
+        {/* eslint-disable-next-line react/no-danger */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       </head>
       <body className="bg-background text-foreground antialiased">
         <a href="#main-content" className="skip-to-content">
@@ -94,6 +88,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Analytics />
         <SpeedInsights />
         <CookieConsent />
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="gtag-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
+              `}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   )

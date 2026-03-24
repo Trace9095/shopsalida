@@ -90,6 +90,21 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Also Explore — Salida */}
+        <div className="pb-6">
+          <p className="text-[#6B7280] text-xs uppercase tracking-wider font-medium mb-3">
+            Also Explore Salida
+          </p>
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <a href="https://visitsalida.co" target="_blank" rel="noopener noreferrer" className="text-[#8B949E] text-sm hover:text-[#D4A853] transition-colors">
+              Visit Salida
+            </a>
+            <a href="https://dinesalida.com" target="_blank" rel="noopener noreferrer" className="text-[#8B949E] text-sm hover:text-[#D4A853] transition-colors">
+              Dine Salida
+            </a>
+          </div>
+        </div>
+
         <div className="border-t border-border mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-muted text-xs">
             &copy; {new Date().getFullYear()} Shop Salida. Independent local business directory.
