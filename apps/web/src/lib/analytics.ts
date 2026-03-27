@@ -1,6 +1,6 @@
 import { track } from '@vercel/analytics'
 
-function gaEvent(eventName: string, params?: Record<string, string | number | boolean>) {
+function gaEvent(eventName: string, params?: Record<string, unknown>) {
   if (typeof window === 'undefined') return
   const gtag = (window as unknown as { gtag?: (...args: unknown[]) => void }).gtag
   if (gtag) {
