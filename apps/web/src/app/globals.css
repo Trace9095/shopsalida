@@ -130,3 +130,28 @@ input[type="submit"] {
 ::-webkit-scrollbar-thumb:hover {
   background: theme(--color-muted);
 }
+
+/* Skip to content */
+.skip-to-content {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 9999;
+}
+.skip-to-content:focus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  padding: 1rem 1.5rem;
+  background: #D4A853;
+  color: #0D1117;
+  font-weight: 700;
+  font-size: 1rem;
+  z-index: 9999;
+  text-decoration: none;
+}

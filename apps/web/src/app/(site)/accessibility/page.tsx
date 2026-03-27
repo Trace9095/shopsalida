@@ -2,68 +2,66 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Accessibility Statement',
-  description: 'Our commitment to web accessibility for all users.',
+  description: 'Our commitment to digital accessibility for all users.',
 }
 
 export default function AccessibilityPage() {
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-16">
-      <h1 className="text-3xl font-bold mb-2">Accessibility Statement</h1>
-      <p className="text-sm opacity-60 mb-10">Last updated: March 2026</p>
+    <div className="min-h-screen bg-[#0D1117] text-[#E6EDF3]">
+      <div className="mx-auto max-w-3xl px-6 py-16">
+        <h1 className="text-3xl font-bold mb-8">Accessibility Statement</h1>
 
-      <div className="space-y-8">
-        <section>
-          <h2 className="text-xl font-semibold mb-3">Our Commitment</h2>
-          <p className="opacity-80">
-            Shop Salida is committed to ensuring digital accessibility for people with disabilities.
-            We continually improve the user experience for everyone and apply relevant accessibility standards.
+        <div className="space-y-6 text-[#8B949E] leading-relaxed">
+          <p>
+            We are committed to ensuring digital accessibility for people of all abilities.
+            We continually improve the user experience for everyone and apply the relevant
+            accessibility standards.
           </p>
-        </section>
 
-        <section>
-          <h2 className="text-xl font-semibold mb-3">Standards</h2>
-          <p className="opacity-80">
-            We aim to conform to the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA.
-            These guidelines explain how to make web content more accessible to people with disabilities.
+          <h2 className="text-xl font-semibold text-[#E6EDF3] mt-8">Our Commitment</h2>
+          <p>
+            We strive to conform to the Web Content Accessibility Guidelines (WCAG) 2.1
+            at Level AA. These guidelines explain how to make web content more accessible
+            for people with disabilities and more user-friendly for everyone.
           </p>
-        </section>
 
-        <section>
-          <h2 className="text-xl font-semibold mb-3">Technical Specifications</h2>
-          <p className="opacity-80 mb-3">
-            Shop Salida relies on the following technologies for conformance with WCAG 2.1:
+          <h2 className="text-xl font-semibold text-[#E6EDF3] mt-8">Measures We Take</h2>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Semantic HTML structure for screen reader compatibility</li>
+            <li>Skip-to-content navigation link</li>
+            <li>Minimum 44px touch targets on all interactive elements</li>
+            <li>Sufficient color contrast ratios throughout the site</li>
+            <li>Alt text on all meaningful images</li>
+            <li>Keyboard-navigable interface</li>
+            <li>ARIA labels where appropriate</li>
+            <li>Responsive design that works across devices and zoom levels</li>
+          </ul>
+
+          <h2 className="text-xl font-semibold text-[#E6EDF3] mt-8">Feedback</h2>
+          <p>
+            We welcome feedback on the accessibility of this site. If you encounter
+            accessibility barriers, please contact us:
           </p>
-          <ul className="list-disc pl-6 opacity-80 space-y-1">
-            <li>HTML</li>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>Email: <a href="mailto:CEO@epicai.ai" className="text-[#D4A853] hover:underline">CEO@epicai.ai</a></li>
+          </ul>
+
+          <h2 className="text-xl font-semibold text-[#E6EDF3] mt-8">Technical Specifications</h2>
+          <p>
+            This website is built with Next.js and follows modern web standards.
+            It relies on the following technologies for accessibility:
+          </p>
+          <ul className="list-disc pl-6 space-y-2">
+            <li>HTML5</li>
+            <li>WAI-ARIA</li>
             <li>CSS</li>
             <li>JavaScript</li>
-            <li>WAI-ARIA</li>
           </ul>
-        </section>
 
-        <section>
-          <h2 className="text-xl font-semibold mb-3">Known Limitations</h2>
-          <p className="opacity-80">
-            While we strive for full accessibility, some third-party content and embedded maps
-            may not meet all accessibility standards. We are actively working to address these limitations.
+          <p className="text-sm mt-12 text-[#6E7681]">
+            This statement was last updated on March 26, 2026.
           </p>
-        </section>
-
-        <section>
-          <h2 className="text-xl font-semibold mb-3">Feedback &amp; Contact</h2>
-          <p className="opacity-80">
-            We welcome your feedback on the accessibility of Shop Salida. If you experience
-            any barriers or have suggestions for improvement, please contact us through our website.
-          </p>
-        </section>
-
-        <section>
-          <h2 className="text-xl font-semibold mb-3">Assessment Approach</h2>
-          <p className="opacity-80">
-            Shop Salida assesses the accessibility of this website through self-evaluation
-            and ongoing development reviews.
-          </p>
-        </section>
+        </div>
       </div>
     </div>
   )
