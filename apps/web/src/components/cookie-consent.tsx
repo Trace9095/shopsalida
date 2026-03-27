@@ -2,26 +2,22 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { hasConsentChoice, acceptAll, acceptEssentialOnly } from '@/lib/cookie-consent'
 
 export function CookieConsent() {
   const [show, setShow] = useState(false)
 
   useEffect(() => {
-    try {
-      const consent = localStorage.getItem('cookie-consent')
-      if (!consent) setShow(true)
-    } catch {
-      // localStorage unavailable
-    }
+    if (!hasConsentChoice()) setShow(true)
   }, [])
 
-  function accept() {
-    try { localStorage.setItem('cookie-consent', 'accepted') } catch {}
+  function handleAccept() {
+    acceptAll()
     setShow(false)
   }
 
-  function decline() {
-    try { localStorage.setItem('cookie-consent', 'declined') } catch {}
+  function handleDecline() {
+    acceptEssentialOnly()
     setShow(false)
   }
 
@@ -38,13 +34,13 @@ export function CookieConsent() {
         </p>
         <div className="flex shrink-0 gap-2">
           <button
-            onClick={decline}
+            onClick={handleDecline}
             className="rounded px-4 py-2 text-sm text-gray-400 transition-colors hover:text-white"
           >
             Decline
           </button>
           <button
-            onClick={accept}
+            onClick={handleAccept}
             className="rounded bg-white/10 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/20"
           >
             Accept

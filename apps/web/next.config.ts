@@ -29,11 +29,11 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.vercel-insights.com https://*.vercel-analytics.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://*.vercel-insights.com https://*.vercel-analytics.com",
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob: https:",
               "font-src 'self'",
-              "connect-src 'self' https://www.googletagmanager.com https://*.vercel-analytics.com https://*.vercel-insights.com",
+              "connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.vercel-analytics.com https://*.vercel-insights.com",
               "frame-src 'self' https://www.openstreetmap.org",
               "object-src 'none'",
               "base-uri 'self'",
